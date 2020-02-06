@@ -34,6 +34,13 @@ def binary_cost(self, params, design_matrix, labels,)
     return cost_func
 
 def multi_cost(self, params, design_matrix, labels,)
+    np.transpose(params)
     temp= np.dot(design_matrix, params)
+    
     cost_func= np.mean(label*np.log1p(np.exp(-temp))+(1-labels*np.log1p(np.exp(temp))))
     return cost_func
+
+def onehot(self, labels)
+    #one hot encoding
+    #takes categorical data and puts it into matrices
+    return onehot_labels
