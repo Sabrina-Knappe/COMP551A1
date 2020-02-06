@@ -1,6 +1,6 @@
 #Implementing the naive bayes class
 
-class Logistic_Regression:
+class Naive_Bayes:
   def __init__(step_size, name):
     self.name = name
 
