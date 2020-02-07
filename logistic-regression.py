@@ -38,7 +38,7 @@ def predict(self, params, test_data):
 
     if type=="binary": 
         y_pred = logistic(np.dot(test_data, params))
-    else
+    else: 
         y_pred = softmax(np.dot(test_data,params))
     
     categories = np.argmax(y_pred,axis=0) # check if axis is right
