@@ -4,10 +4,10 @@ import scipy
 
 class Logistic_Regression:
   def __init__(step_size, name, class_type):
-    if(class_type=="binary")  #depends on the type of dataset we use
+    if class_type == "binary":  #depends on the type of dataset we use
         self.type= True
         self.cost= binary_cost()
-    else
+    else: 
         self.type=False 
         self.cost= multi_cost()
     self.name = name #string value
@@ -24,7 +24,7 @@ def fit(self, training_data, training_labels, learning_rate, term):
     temp = np.inf
 
     while np.linalg.norm(temp) > term:
-        if(type == "binary")
+        if type == "binary": 
             temp = gradient(training_data, training_labels, params)
         else:
             onehot_labels = onehot(training_labels)
@@ -36,7 +36,7 @@ def fit(self, training_data, training_labels, learning_rate, term):
 def predict(self, params, test_data):
     N,D = test_data.shape
 
-    if(type=="binary") 
+    if type=="binary": 
         y_pred = logistic(np.dot(test_data, params))
     else
         y_pred = softmax(np.dot(test_data,params))
