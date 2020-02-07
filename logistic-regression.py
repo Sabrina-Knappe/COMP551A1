@@ -43,13 +43,11 @@ def predict(self, params, test_data):
     
     categories = np.argmax(y_pred,axis=0) # check if axis is right
 
-    category= 0
-    print("We predict that "+self.name+"is category "+category)
-    return category
+    return categories
     #requires parameter values
 
 
-def binary_cost(self, params, design_matrix, labels)
+def bin_cost(self, params, design_matrix, labels)
     temp= np.dot(design_matrix, params)
     cost_func= np.mean(label*np.log1p(np.exp(-temp))+(1-labels*np.log1p(np.exp(temp))))
     return cost_func
