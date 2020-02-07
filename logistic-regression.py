@@ -3,8 +3,8 @@ import numpy as np
 import scipy
 
 class Logistic_Regression:
-  def __init__(step_size, name, type):
-    if(type=="binary")  #depends on the type of dataset we use
+  def __init__(step_size, name, class_type):
+    if(class_type=="binary")  #depends on the type of dataset we use
         self.type= True
         self.cost= binary_cost()
     else
