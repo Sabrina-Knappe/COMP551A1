@@ -47,17 +47,17 @@ def predict(self, params, test_data):
     #requires parameter values
 
 
-def bin_cost(self, params, design_matrix, labels)
+def bin_cost(self, params, design_matrix, labels): 
     temp= np.dot(design_matrix, params)
     cost_func= np.mean(label*np.log1p(np.exp(-temp))+(1-labels*np.log1p(np.exp(temp))))
     return cost_func
 
-def multi_cost(self, params, design_matrix, labels)
+def multi_cost(self, params, design_matrix, labels): 
     temp= np.dot(design_matrix, params.T)
     cost = - np.sum(np.dot(design_matrix, labels.T) - logsumexp(temp))
     return cost
 
-def onehot(self, labels)
+def onehot(self, labels): 
     #one hot encoding
     #takes categorical data and puts it into matrices
     num_labels, num_classes = labels.shape[0], np.max(labels)
@@ -65,19 +65,19 @@ def onehot(self, labels)
     onehot_labels[np.arrange(num_labels), y-1] = 1
     return onehot_labels
 
-def softmax(self,results)
+def softmax(self,results): 
     #performs softmax on an element
     y_pred = np.exp(results)
     y_pred /= np.sum(results)
     return y_pred
 
-def logsumexp(vec)
+def logsumexp(vec): 
     #gives log of sum of exponents of elements of vec
     vec_max = np.max(vec,0)[None,:]
     result = vec_max + np.log(np.sum(np.exp(vec - vec_max)))
     return result
 
-def gradient(self, design_matrix, labels, params, regularization)
+def gradient(self, design_matrix, labels, params, regularization): 
     #Finds gradient for a given set of params
     N,D = design_matrix.shape
     y_pred = logistic(np.dot(design_matrix, params)) 
@@ -86,7 +86,7 @@ def gradient(self, design_matrix, labels, params, regularization)
     # grad[1:] += regularization * np.sign(w[1:]) #L1 regularization
     return grad
 
-def logistic(logit)
+def logistic(logit): 
     #Evaluates logistic function on logit
     fcn_value = 1/(1 + np.exp(-logit))
     return fcn_value
