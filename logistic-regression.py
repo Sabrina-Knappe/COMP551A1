@@ -3,10 +3,10 @@ import numpy as np
 import scipy
 
 class Logistic_Regression:
-  def __init__(step_size, name, class_type):
+  def __init__(self, step_size, name, class_type):
     if class_type == "binary":  #depends on the type of dataset we use
         self.type= True
-        self.cost= binary_cost()
+        self.cost= bin_cost()
     else: 
         self.type=False 
         self.cost= multi_cost()
@@ -62,7 +62,7 @@ def onehot(self, labels):
     #takes categorical data and puts it into matrices
     num_labels, num_classes = labels.shape[0], np.max(labels)
     onehot_labels = np.zeros(num_labels, num_classes)
-    onehot_labels[np.arrange(num_labels), y-1] = 1
+    onehot_labels[np.arrange(num_labels), labels-1] = 1
     return onehot_labels
 
 def softmax(self,results): 
@@ -81,8 +81,8 @@ def gradient(self, design_matrix, labels, params, regularization):
     #Finds gradient for a given set of params
     N,D = design_matrix.shape
     y_pred = logistic(np.dot(design_matrix, params)) 
-    grad = np.dot(design_matrix.T, y_pred - y)/N
-    grad[1:] += regularization * w[1:] #L2 regularization
+    grad = np.dot(design_matrix.T, y_pred - labels)/N
+    grad[1:] += regularization * params[1:] #L2 regularization
     # grad[1:] += regularization * np.sign(w[1:]) #L1 regularization
     return grad
 
