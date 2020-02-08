@@ -20,24 +20,39 @@ from urllib.request import urlretrieve
 import pandas as pd
 # Import numpy
 import numpy as np
+import os 
 
 # Assign url of file: url
-url_data =  'https://archive.ics.uci.edu/ml/datasets/Adult/adult.data'
+url_index = 'https://archive.ics.uci.edu/ml/machine-learning-databases/adult/Index'
+url_data =  'https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data'
+url_names = 'https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.names'
+url_test = 'https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.test' 
+url_old_names  ='https://archive.ics.uci.edu/ml/machine-learning-databases/adult/old.adult.names'
+
 
 # Save file locally
-urlretrieve(url, 'adult-data.csv')
+# data folder path 
+dataFolderPath = 'D:\\Documents\\U4 Academics\\Winter 2020\\COMP 551-Applied Machine Learning\\Assignments\\Assignment 1\\COMP551A1\\Dataset Folder\\Dataset2_Adult'
+os.chdir (dataFolderPath)
+# retreving the data
+urlretrieve(url_index, 'adult_index.csv')
+urlretrieve(url_data, 'adult_data.csv')
+urlretrieve(url_names, 'adult_names.csv')
+urlretrieve(url_test, 'adult_test.csv')
+urlretrieve(url_old_names, 'adult_old_names.csv')
+
 
 # Read file into a DataFrame and print its head
-df = pd.read_csv('adult-data.csv', sep=',', error_bad_lines=False)
-x = np.genfromtxt("adult-data.csv", dtype=None)
+
+df = pd.read_csv('adult_data.csv', sep=',')
+
 print(df)
-
-
 
 
 # Convert to numpy
 temp = df.to_numpy()
 
 # Split array into design matrix and labels
+
 
 
