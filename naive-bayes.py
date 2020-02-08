@@ -7,14 +7,11 @@ class Naive_Bayes:
         self.type==True
     else
         self.type==False
-
-
-
     
 
 def fit(self, training_data, training_labels):
     print("Hello my name is " + self.name)
-    
+
 
 def predict(self, test_data, test_labels):
     category= 0
