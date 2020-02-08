@@ -42,21 +42,29 @@ urlretrieve(url_test, 'adult_test.csv')
 urlretrieve(url_old_names, 'adult_old_names.csv')
 
 
-# Read file into a DataFrame and print its head
+# Read file into a DataFrame and print its head, df = data frame 
 
-df = pd.read_csv('adult_index.csv', sep=',')
-df = pd.read_csv('adult_data.csv', sep=',')
-df = pd.read_csv('adult_names.csv', sep=',')
-df = pd.read_csv('adult_test.csv', sep=',')
-df = pd.read_csv('adult_old_names.csv', sep=',')
+df_index = pd.read_csv('adult_index.csv', sep=',')
+df_adult_train = pd.read_csv('adult_data.csv', sep=',') # adult data training set (including the validation set)
+df_adult_test = pd.read_csv('adult_test.csv', sep=',')  # adult data testing set 
+# df_names = pd.read_csv('adult_names.csv', sep=',')
+# df_old_names = pd.read_csv('adult_old_names.csv', sep=',')
 
-print(df)
+print(df_adult_data) # see what the data is s
 
+# Convert df_adult_data data frame to numpy
+adult_train = df_adult_train.to_numpy()
+adult_test = df_adult_test.to_numpy()
 
-# Convert to numpy
-temp = df.to_numpy()
 
 # Split array into design matrix and labels
+
+# labels of training set 
+train_label = adult_train[:,-1]
+# labels of testing set 
+test_label = adult_test[:,-1]
+
+# design matrix 
 
 
 
