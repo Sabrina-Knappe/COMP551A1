@@ -44,7 +44,11 @@ urlretrieve(url_old_names, 'adult_old_names.csv')
 
 # Read file into a DataFrame and print its head
 
+df = pd.read_csv('adult_index.csv', sep=',')
 df = pd.read_csv('adult_data.csv', sep=',')
+df = pd.read_csv('adult_names.csv', sep=',')
+df = pd.read_csv('adult_test.csv', sep=',')
+df = pd.read_csv('adult_old_names.csv', sep=',')
 
 print(df)
 
