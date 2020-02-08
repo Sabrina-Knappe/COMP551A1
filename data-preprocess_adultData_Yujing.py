@@ -22,13 +22,14 @@ import pandas as pd
 import numpy as np
 
 # Assign url of file: url
-url =  'https://archive.ics.uci.edu/ml/datasets/Adult/adult.data'
+url_data =  'https://archive.ics.uci.edu/ml/datasets/Adult/adult.data'
 
 # Save file locally
 urlretrieve(url, 'adult-data.csv')
 
 # Read file into a DataFrame and print its head
-df = pd.read_csv('adult-data.csv', sep=',')
+df = pd.read_csv('adult-data.csv', sep=',', error_bad_lines=False)
+x = np.genfromtxt("adult-data.csv", dtype=None)
 print(df)
 
 
