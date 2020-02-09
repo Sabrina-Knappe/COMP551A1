@@ -6,14 +6,12 @@ class Logistic_Regression:
   def __init__(self, step_size, name, class_type):
     if class_type == "binary":  #depends on the type of dataset we use
         self.type= True
-        self.cost= bin_cost()
     else: 
         self.type=False 
-        self.cost= multi_cost()
     self.name = name #string value
-    self.learning_rate = null
-    self.it_num= null
-    self.term = null #termination condition
+    self.learning_rate = 0.01
+    self.it_num= 1000
+    self.term = 1e-2 #termination condition
     self.regularization = 0 
     
     
@@ -24,22 +22,22 @@ def fit(self, training_data, training_labels, learning_rate, term):
     temp = np.inf
 
     while np.linalg.norm(temp) > term:
-        if type == "binary": 
-            temp = gradient(training_data, training_labels, params)
+        if type == True: 
+            temp = gradient(self,training_data, training_labels, self.params, self.regularization)
         else:
             onehot_labels = onehot(training_labels)
-            temp = gradient(training_data, onehot_labels, params)
-        params = params - learning_rate*temp
-    return params
+            temp = gradient(self,training_data, onehot_labels, self.params, self.regularization)
+        self.params -= learning_rate*temp
+    return self.params
     
 
 def predict(self, params, test_data):
     N,D = test_data.shape
 
-    if type=="binary": 
+    if type==True: 
         y_pred = logistic(np.dot(test_data, params))
     else: 
-        y_pred = softmax(np.dot(test_data,params))
+        y_pred = softmax(results=np.dot(test_data,params))
     
     categories = np.argmax(y_pred,axis=0) # check if axis is right
 
@@ -49,15 +47,15 @@ def predict(self, params, test_data):
 
 def bin_cost(self, params, design_matrix, labels): 
     temp= np.dot(design_matrix, params)
-    cost_func= np.mean(label*np.log1p(np.exp(-temp))+(1-labels*np.log1p(np.exp(temp))))
+    cost_func= np.mean(labels*np.log1p(np.exp(-temp))+(1-labels*np.log1p(np.exp(temp))))
     return cost_func
 
 def multi_cost(self, params, design_matrix, labels): 
     temp= np.dot(design_matrix, params.T)
-    cost = - np.sum(np.dot(design_matrix, labels.T) - logsumexp(temp))
+    cost = 0 - np.sum(np.dot(design_matrix, labels.T) - logsumexp(temp))
     return cost
 
-def onehot(self, labels): 
+def onehot(labels): 
     #one hot encoding
     #takes categorical data and puts it into matrices
     num_labels, num_classes = labels.shape[0], np.max(labels)
@@ -65,7 +63,7 @@ def onehot(self, labels):
     onehot_labels[np.arrange(num_labels), labels-1] = 1
     return onehot_labels
 
-def softmax(self,results): 
+def softmax(results): 
     #performs softmax on an element
     y_pred = np.exp(results)
     y_pred /= np.sum(results)
