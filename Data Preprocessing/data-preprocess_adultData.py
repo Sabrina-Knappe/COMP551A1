@@ -45,25 +45,37 @@ urlretrieve(url_old_names, 'adult_old_names.csv')
 
 df_index = pd.read_csv('adult_index.csv', sep=',')
 df_adult_train = pd.read_csv('adult_data.csv', sep=',') # adult data training set (including the validation set)
-df_adult_test = pd.read_csv('adult_test.csv', sep=',')  # adult data testing set 
+df_adult_test = pd.read_csv('adult_test.csv', sep=',')  # adult data testing set # somehow this only has one column...
+# with the first row removed from the original testing dataset'|1x3 Cross validator']
 # df_names = pd.read_csv('adult_names.csv', sep=',')
 # df_old_names = pd.read_csv('adult_old_names.csv', sep=',')
 
-print(df_adult_data) # see what the data is s
+print(df_adult_train); print(df_adult_test) # see what the data is s
 
 # Convert df_adult_data data frame to numpy
 adult_train = df_adult_train.to_numpy()
 adult_test = df_adult_test.to_numpy()
 
-
 # Split array into design matrix and labels
 
-# labels of training set 
-train_label = adult_train[:,-1]
-# labels of testing set 
-test_label = adult_test[:,-1]
+# adult_train[1,:] a whole row 
+# adult_train[:,1] a whole column 
 
-# design matrix 
+# labels of training set 
+adult_train_label = adult_train[:,-1]
+# labels of testing set 
+adult_test_label = adult_test[:,-1]
+
+# design matrix - the rest of the adult_train, adult_test excluding the last column 
+train_desMat = adult_train[:,0:-1]
+test_desMat = adult_test[:,0:-1]
+
+# remove any examples with missing or malformed features 
+# delete every instance with '?' in any of its features 
+for i in range ()
+
+
+# 
 
 
 
