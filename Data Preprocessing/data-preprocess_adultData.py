@@ -43,9 +43,9 @@ urlretrieve(url_old_names, 'adult_old_names.csv')
 
 # Read file into a DataFrame and print its head, df = data frame 
 
-df_index = pd.read_csv('adult_index.csv', sep=',')
-df_adult_train = pd.read_csv('adult_data.csv', sep=',') # adult data training set (including the validation set)
-df_adult_test = pd.read_csv('adult_test.csv', sep=',')  # adult data testing set # somehow this only has one column...
+df_index = pd.read_csv('adult_index.csv', sep=',', header=None) # no header, so first row can be read 
+df_adult_train = pd.read_csv('adult_data.csv', sep=',', header=None) # adult data training set (including the validation set)
+df_adult_test = pd.read_csv('adult_test.csv', sep=',', header=None)  # adult data testing set # somehow this only has one column...
 # with the first row removed from the original testing dataset'|1x3 Cross validator']
 # df_names = pd.read_csv('adult_names.csv', sep=',')
 # df_old_names = pd.read_csv('adult_old_names.csv', sep=',')
@@ -61,21 +61,35 @@ adult_test = df_adult_test.to_numpy()
 # adult_train[1,:] a whole row 
 # adult_train[:,1] a whole column 
 
-# labels of training set 
+# labels of training set alist[start:stop:step]
 adult_train_label = adult_train[:,-1]
 # labels of testing set 
 adult_test_label = adult_test[:,-1]
 
 # design matrix - the rest of the adult_train, adult_test excluding the last column 
-train_desMat = adult_train[:,0:-1]
-test_desMat = adult_test[:,0:-1]
+train_desMat = adult_train[0:len(adult_train)-1:1]
+test_desMat = adult_test[0:len(adult_train)-1:1]
 
 # remove any examples with missing or malformed features 
-# delete every instance with '?' in any of its features 
-for i in range ()
-
-
-# 
+# if the row has '?' at any column we delete the whole row 
+# record the row number into row2del (row to delete)
+row2del = []; col1 = []
+for i in range(len(train_desMat)): 
+    for row in enumerate(train_desMat[i,:]):# goes row by row first
+        alist = []
+        for column in enumerate(row): 
+            # print(column[1])
+            alist.append(column[1])
+        col1.append(alist[1]); arow=list(row)
+    if ' ?' in col1:
+        row2del.append(arow[0])
+                
+    
+                
+        
+        
+        
+        
 
 
 
