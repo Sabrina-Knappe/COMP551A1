@@ -47,7 +47,14 @@ def predict(self, test_data, test_labels):
 #class prior
 def multiclass(self, training_data, training_labels):
     #use the multi version of max likelihood??
-    return 0
+    #Count number of occurrences of each value in array of non-negative ints.
+    categories, number_of_each= np.unique(training_labels, False, False, True)
+    N= training_labels.size
+    i=0
+    max_likelihood_estimate= []
+    for c in categories:
+        max_likelihood_estimate[i]= number_of_each[i]/N
+    return max_likelihood_estimate
 
 
 def binary_prior(self, training_data, training_labels):
