@@ -21,6 +21,50 @@ data_train = df_adult_train
 data = data_train
 # select below to excute the code equivalent to onehot_encode(data) obtaining features 
 
+df = df_adult_train 
+def basic_stats(df):
+    for column in df.columns:
+        print (column)
+        if df.dtypes[column] == np.object: # Categorical data
+            print (df[column].value_counts())
+        else:
+            print (df[column].describe())         
+        print ('\n')
+       
+        # some fancy histograms 
+    
+basic_stats(df_adult_train )
+
+# Encode the categorical features as numbers
+def number_encode_features(df):
+    result = df.copy()
+    encoders = {}
+    for column in result.columns:
+        if result.dtypes[column] == np.object:
+            encoders[column] = preprocessing.LabelEncoder()
+            result[column] = encoders[column].fit_transform(result[column])
+    return result, encoders
+
+
+# Calculate the correlation and plot it
+# encoded_data, _ = number_encode_features(df)
+    # show heatmap - exploring correlations 
+encoded_data = result 
+sns.heatmap(encoded_data.corr(), square=True)
+plt.show()
+encoded_data.tail(5)
+# Expore the strong correaltion between "education" and "education-num" revealed by the heatmap (lighter color)
+df[["education", "educational-num"]].head(10)
+# "education" and "education-num" are essentially the same data, delete the numerical one
+del df["educational-num"]
+# df.head(1) to see "educational-num" is successfully deleted 
+# also seems like "gender" and "relationship" are anti-correlation (darkest color on heatmap)
+
+
+data_train = df_adult_train
+data = data_train
+# select below to excute the code equivalent to onehot_encode(data) obtaining features 
+
 def onehot_encode(data):
   '''
       performs one-hot-encoding on categorical data and then concatenate back with 
@@ -50,41 +94,6 @@ def onehot_encode(data):
 
 features_train = features; 
 
-
-df = df_adult_train 
-def basic_stats(df):
-    for column in df.columns:
-        print (column)
-        if df.dtypes[column] == np.object: # Categorical data
-            print (df[column].value_counts())
-        else:
-            print (df[column].describe()) 
-            
-        print ('\n')
-        
-        # some fancy histograms 
-    
-basic_stats(df_adult_train )
-
-
-# Encode the categorical features as numbers
-def number_encode_features(df):
-    result = df.copy()
-    encoders = {}
-    for column in result.columns:
-        if result.dtypes[column] == np.object:
-            encoders[column] = preprocessing.LabelEncoder()
-            result[column] = encoders[column].fit_transform(result[column])
-    return result, encoders
-
-
-# Calculate the correlation and plot it
-# encoded_data, _ = number_encode_features(df)
-    # show heatmap - exploring correlations 
-encoded_data = result 
-sns.heatmap(encoded_data.corr(), square=True)
-plt.show()
-encoded_data.tail(5)
 
 
   
