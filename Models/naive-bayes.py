@@ -30,11 +30,9 @@ def fit(self, training_data, training_labels):
         if(self.feature_types[i]=="binary"):
             self.binary_likelihood()
         elif(self.feature_types[i]=="categorical"):
-            self.categorical
+            self.categorical()
         else:
-            self.continuous
-
-
+            self.continuous()
 
     return model
 
@@ -69,7 +67,7 @@ def binary_prior(self, training_data, training_labels): #do i need to change thi
 
 #likelihood
 def binary_likelihood(self, training_data, training_labels):
-
+    
     return 0
 
 def categorical(self, training_data, training_labels):
