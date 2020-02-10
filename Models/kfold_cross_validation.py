@@ -1,7 +1,16 @@
 # -*- coding: utf-8 -*-
 """
 K-fold cross validation:
-    5-fold cross validation to estimate performance in all experiments 
+    5-fold cross validation to estimate performance in all experiments
+    evaluate the performance using accuracy 
+    
+    tasks: 
+        1. Compare the accuracy of naive Bayes and logistic regression on the four datasets
+        2. Test different learning rates for gradient descent appleid to logistic regression
+        Use the threshold for change in the value of the cost function as termination criteria, 
+        and plot the accuracy on train/validation set as a function of iterations of gradient descent. 
+        3.  Compare the accuracy of the two models as a function of the size of dataset (by controlling the training size). 
+        As an example, see Figure 1 here 1. 
 """
 
 
