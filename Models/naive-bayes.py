@@ -7,9 +7,8 @@ class Naive_Bayes(object):
     #creating the Naive Bayes model for your dataset.
     #name is a string that is the name of the dataset
     #feature_types is an array of strings that is analogous with the positions of the features for your data and tells what
-    #type of feature it is (continuous, binary, categorical)
-    #prior type
-    def __init__(self, step_size, name, feature_types, prior_type):
+    #type of feature it is ("continuous", "binary", "categorical")
+    def __init__(self, name, feature_types):
         self.name = name
         self.prior_type= prior_type
         self.feature_types= feature_types
@@ -20,20 +19,15 @@ def fit(self, training_data, training_labels):
     model= 0
     prior= 0
     print("Now fitting " + self.name)
-    #learn the prior probabilities
-    if(self.prior_type=="multiclass"):
-        prior=self.multiclass(training_data, training_labels)
-    else:
-        prior=self.binary_prior(training_data, training_labels)
-    i=0
+    #partition the data according to the types of the
+    for t
     for t in training_data:
         if(self.feature_types[i]=="binary"):
-            self.binary_likelihood()
+            model= self.binary_likelihood(training_data, training_labels)
         elif(self.feature_types[i]=="categorical"):
-            self.categorical()
+            model= self.categorical(training_data, training_labels)
         else:
-            self.continuous()
-
+            model= self.continuous(training_data, training_labels)
     return model
 
 
@@ -69,8 +63,8 @@ def binary_prior(self, training_data, training_labels): #do i need to change thi
 
 #likelihood
 def binary_likelihood(self, training_data, training_labels):
-    #implement
-
+    #implement bernouilli naive bayes
+    logp= np.log(self.multiclass(training_data, training_labels))
     return 0
 
 def categorical(self, training_data, training_labels):
@@ -81,6 +75,9 @@ def continuous(self, training_data, training_labels):
     D= training_data.shape[1]
     mu, s= np.zeros((C,D)), np.zeros((C,D))
     for c in range(C): #calculate mean and standard deviation
-        inds
-    return 0
+        inds=np.nonzero(training_labels[:,c])[0]
+        mu[c,:]=np.mean(training_data[inds,:],0)
+    log_prior= np.log(np.mean(y,0))[:,None]
+    log_likelihood= - np.sum(.5*(((Xt[None, :, :] - mu[:,None,:]))**2), 2)    
+    return log_prior+log_likelihood
 
