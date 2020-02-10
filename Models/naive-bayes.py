@@ -55,3 +55,9 @@ def binary_prior(self, training_data, training_labels):
 def binary_likelihood(self, training_data, training_labels):
 
     return 0
+
+def categorical(self, training_data, training_labels):
+    return 0
+
+def continuous(self, training_data, training_labels):
+    return 0
