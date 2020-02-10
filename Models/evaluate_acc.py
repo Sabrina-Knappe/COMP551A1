@@ -75,6 +75,7 @@ def cross_validation_split(dataset, folds=3):
 from random import seed
 from random import randrange
 
+# try new 
 # Split a dataset into k folds
 def cross_validation_split(dataset, folds=3):
 	dataset_split = list()
