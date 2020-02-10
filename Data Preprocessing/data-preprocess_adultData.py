@@ -70,17 +70,61 @@ adult_test_label = adult_test[:,-1]
 train_desMat = adult_train[0:len(adult_train)-1:1]
 test_desMat = adult_test[0:len(adult_train)-1:1]
 
-# remove any examples with missing or malformed features 
+# remove any examples with missing or malformed features in the training set 
 # if the row has '?' at any column we delete the whole row 
 # record the row number into row2del (row to delete)
-row2del = []; 
+row2del_train = []; 
 for i in range(len(train_desMat)):
     row1=[]
     for row in enumerate(train_desMat[i,:]):
         row1.append(row[1]) 
     if ' ?' in row1:
-        row2del.append(i)
-            
+        row2del_train.append(i)
+# remove the rows indexed in row2del from the training set
+train_desMat_new = train_desMat
+train_desMat_new = np.delete(train_desMat,(row2del_train),axis=0) # 30161 training instances left 
+
+# remove any examples with missing or malformed features in the testing set 
+row2del_test = []; 
+for i in range(len(test_desMat)):
+    row1=[]
+    for row in enumerate(test_desMat[i,:]):
+        row1.append(row[1]) 
+    if ' ?' in row1:
+        row2del_test.append(i)
+# remove the rows indexed in row2del from the training set
+test_desMat_new = test_desMat
+test_desMat_new = np.delete(test_desMat,(row2del_test),axis=0) # 15060 testing instances left 
+
+# performing one-hot-encoding on categorical data and leave the numerical data be 
+# (allowed to use sklearn forone hot encoding)
+from numpy import array
+from numpy import argmax
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
+def onehot_encode(data):
+
+    # define example
+    data = ['cold', 'cold', 'warm', 'cold', 'hot', 'hot', 'warm', 'cold', 'warm', 'hot']
+    values = array(data)
+    print(values)
+    # integer encode
+    label_encoder = LabelEncoder()
+    integer_encoded = label_encoder.fit_transform(values)
+    print(integer_encoded)
+    # binary encode
+    onehot_encoder = OneHotEncoder(sparse=False)
+    integer_encoded = integer_encoded.reshape(len(integer_encoded), 1)
+    onehot_encoded = onehot_encoder.fit_transform(integer_encoded)
+    print(onehot_encoded)
+    # invert first example
+    inverted = label_encoder.inverse_transform([argmax(onehot_encoded[0, :])])
+    print(inverted)
+
+
+# more feature selection engineering before feeding into model 
+
+
         
         
         
