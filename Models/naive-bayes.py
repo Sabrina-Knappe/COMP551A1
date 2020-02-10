@@ -4,6 +4,11 @@ class Naive_Bayes(object):
     prior_type=""
     name=""
     
+    #creating the Naive Bayes model for your dataset.
+    #name is a string that is the name of the dataset
+    #feature_types is an array of strings that is analogous with the positions of the features for your data and tells what
+    #type of feature it is (continuous, binary, categorical)
+    #prior type
     def __init__(self, step_size, name, feature_types, prior_type):
         self.name = name
         self.prior_type= prior_type
@@ -14,18 +19,17 @@ class Naive_Bayes(object):
 def fit(self, training_data, training_labels):
     model= 0
     prior= 0
-    print("Hello my name is " + self.name)
+    print("Now fitting " + self.name)
     #learn the prior probabilities
     if(self.prior_type=="multiclass"):
         prior=self.multiclass(training_data, training_labels)
     else:
         prior=self.binary_prior(training_data, training_labels)
-    #learn the likelihood components
     i=0
     for t in training_data:
         if(self.feature_types[i]=="binary"):
             self.binary_likelihood()
-        elif(self.feature_types[i]==""):
+        elif(self.feature_types[i]=="categorical"):
             self.categorical
         else:
             self.continuous
