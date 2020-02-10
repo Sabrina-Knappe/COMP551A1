@@ -114,8 +114,9 @@ data_train = df_adult_train
 data = data_train
 # select the onehot_encode function from util_oreoricess
 # to excute the code equivalent to onehot_encode(data) obtaining features 
-# features_train = features; 
+# features_train = features; "education_nums" already deleted
 features_train, numeric_subset_train, categorical_subset_train = onehot_encode(data_train)
+# resulting in 107 columns after one-hot-encoding 
 # no need to do one-hot encoding for testing dataset 
     
 
