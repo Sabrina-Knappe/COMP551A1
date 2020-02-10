@@ -20,7 +20,9 @@ def fit(self, training_data, training_labels):
     prior= 0
     print("Now fitting " + self.name)
     #partition the data according to the types of the
-    for t
+    categories, inverse =np.unique(training_labels, False, True, False)
+    for c in categories:
+        
     for t in training_data:
         if(self.feature_types[i]=="binary"):
             model= self.binary_likelihood(training_data, training_labels)
