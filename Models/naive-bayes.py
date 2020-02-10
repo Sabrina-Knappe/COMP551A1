@@ -40,6 +40,8 @@ def fit(self, training_data, training_labels):
 def predict(self, test_data, test_labels):
     category= 0
     print("We predict that "+self.name+"has label "+category)
+    for c in class:
+        #multiply array[c_index]*
     return category
 
 #class prior
@@ -67,11 +69,18 @@ def binary_prior(self, training_data, training_labels): #do i need to change thi
 
 #likelihood
 def binary_likelihood(self, training_data, training_labels):
-    
+    #implement
+
     return 0
 
 def categorical(self, training_data, training_labels):
     return 0
 
 def continuous(self, training_data, training_labels):
+    N, C= training_labels.shape
+    D= training_data.shape[1]
+    mu, s= np.zeros((C,D)), np.zeros((C,D))
+    for c in range(C): #calculate mean and standard deviation
+        inds
     return 0
+
