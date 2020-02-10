@@ -20,4 +20,5 @@ def evaluate_acc(y,y_hat):
     output:
         accuracy score of the models 
     '''
-
+# Accuracy, Recall, Precision, F1 Score in Python from scratch
+    # https://www.youtube.com/watch?v=9PbrWiLC-4k
