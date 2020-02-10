@@ -5,7 +5,7 @@ Dataset sources:
 
 - one(Ionosphere): this is a dataset where the goal is to predict whether a radar return from ionosphere is ‘good’ or ‘bad’. This radar data was collected by a system in Goose Bay, Labrador. Get it from: https://archive.ics.uci.edu/ml/datasets/ionosphere 
 - two  (Adult Data Set): also known as “Census Income” dataset, this is a dataset where the goal is to predict the whether income exceeds $50K/yr based on census data. Get it from: https://archive.ics.uci.edu/ml/datasets/Adult 
-- three (Breast Cancer Wisconsin (Prognostic) Data Set): Get it from: https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+%28Prognostic%29
+- three (SPECTF Heart Data Set): Get it from: https://archive.ics.uci.edu/ml/datasets/SPECTF+Heart
 - four: Quadruped Mammals Data Set. Get it from: https://archive.ics.uci.edu/ml/datasets/Quadruped+Mammals)
 
 
