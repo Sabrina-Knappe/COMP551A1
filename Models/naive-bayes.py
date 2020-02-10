@@ -57,9 +57,14 @@ def multiclass(self, training_data, training_labels):
     return max_likelihood_estimate
 
 
-def binary_prior(self, training_data, training_labels):
-    #use the max likelihood estimate
-    return 0
+def binary_prior(self, training_data, training_labels): #do i need to change this?
+    categories, number_of_each= np.unique(training_labels, False, False, True)
+    N= training_labels.size
+    i=0
+    max_likelihood_estimate= []
+    for c in categories:
+        max_likelihood_estimate[i]= number_of_each[i]/N
+    return max_likelihood_estimate
 
 
 #likelihood
