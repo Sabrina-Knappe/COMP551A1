@@ -73,19 +73,14 @@ test_desMat = adult_test[0:len(adult_train)-1:1]
 # remove any examples with missing or malformed features 
 # if the row has '?' at any column we delete the whole row 
 # record the row number into row2del (row to delete)
-row2del = []; col1 = []
-for i in range(len(train_desMat)): 
-    for row in enumerate(train_desMat[i,:]):# goes row by row first
-        alist = []
-        for column in enumerate(row): 
-            # print(column[1])
-            alist.append(column[1])
-        col1.append(alist[1]); arow=list(row)
-    if ' ?' in col1:
-        row2del.append(arow[0])
-                
-    
-                
+row2del = []; 
+for i in range(len(train_desMat)):
+    row1=[]
+    for row in enumerate(train_desMat[i,:]):
+        row1.append(row[1]) 
+    if ' ?' in row1:
+        row2del.append(i)
+            
         
         
         
