@@ -18,5 +18,17 @@ def predict(self, test_data, test_labels):
     print("We predict that "+self.name+"is category "+category)
     return category
 
+#likelihood measurement for binary features
+def bernoulli(prior, likelihood, x):
+
+#likelihood measurement for categorical features
+def categorical():
+
+#likelihood for continuous features
+def gaussian(X, Y, Xtest):
+
+
+#likelihood measurement for continuous features
+
 print(p1.name)
 print(p1.age)
