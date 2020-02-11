@@ -22,7 +22,7 @@ def fit(self, training_data, training_labels, learning_rate, term):
     temp = np.inf
 
     while np.linalg.norm(temp) > term:
-        if type == True: 
+        if self.type == True: 
             temp = gradient(self,training_data, training_labels, self.params, self.regularization)
         else:
             onehot_labels = onehot(training_labels)
@@ -34,7 +34,7 @@ def fit(self, training_data, training_labels, learning_rate, term):
 def predict(self, params, test_data):
     N,D = test_data.shape
 
-    if type==True: 
+    if type == True: 
         y_pred = logistic(np.dot(test_data, params))
     else: 
         y_pred = softmax(results=np.dot(test_data,params))
@@ -60,7 +60,7 @@ def onehot(labels):
     #takes categorical data and puts it into matrices
     num_labels, num_classes = labels.shape[0], np.max(labels)
     onehot_labels = np.zeros(num_labels, num_classes)
-    onehot_labels[np.arrange(num_labels), labels-1] = 1
+    onehot_labels[np.arange(num_labels), labels-1] = 1
     return onehot_labels
 
 def softmax(results): 
