@@ -21,15 +21,22 @@ def fit(self, training_data, training_labels):
     print("Now fitting " + self.name)
     #partition the data according to the types of the
     categories, inverse =np.unique(training_labels, False, True, False)
-    for c in categories:
-        
-    for t in training_data:
-        if(self.feature_types[i]=="binary"):
-            model= self.binary_likelihood(training_data, training_labels)
-        elif(self.feature_types[i]=="categorical"):
-            model= self.categorical(training_data, training_labels)
+    j=0
+    binary= np.array()
+    categorical= np.array()
+    continuous= np.array()
+    for c in inverse:
+        if(categories[c]=="binary"):
+            np.append(binary, training_data[:, j])
+        elif(categories[c]=="categorical"):
+            np.append(categorical, training_data[:, j])
         else:
-            model= self.continuous(training_data, training_labels)
+            np.append(continuous, training_data[:, j])
+        j++
+    binary_model= self.binary_likelihood(training_data, training_labels)
+    categorical_model= self.categorical(training_data, training_labels)
+    continuous_model= self.continuous(training_data, training_labels)
+    model= np.sum(binary_model,categorical_model,continuous_model)
     return model
 
 
@@ -66,8 +73,13 @@ def binary_prior(self, training_data, training_labels): #do i need to change thi
 #likelihood
 def binary_likelihood(self, training_data, training_labels):
     #implement bernouilli naive bayes
-    logp= np.log(self.multiclass(training_data, training_labels))
-    return 0
+    prior= self.multiclass(training_data, training_labels)
+    #likelihood of each word under each class
+    likelihood= self
+    logp= np.log(prior)+np.sum(np.log(likelihood*x[:,None]),0)+np.sum(np.log((1-likelihood)*(1-x[:,None])),0)
+    posterior= np.exp(log_p0)
+    posterior /= np.sum(posterior)
+    return posterior
 
 def categorical(self, training_data, training_labels):
     return 0
