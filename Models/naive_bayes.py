@@ -23,6 +23,8 @@ class Naive_Bayes(object):
         #partition the data according to the types of the
         categories, inverse =np.unique(training_labels, False, True, False)
         j=0
+        print(training_labels.shape)
+        tupe= (1, training_labels.shape[0])
         binary= np.array([])
         categorical= np.array([])
         continuous= np.array([])
@@ -38,8 +40,15 @@ class Naive_Bayes(object):
                 np.append(categorical, training_data[:, j], axis=0)
             else:
                 print("continuous")
-                continous=np.append(continuous, [training_data[:, j]], axis=0)
-                print(continous)
+                print(continuous.ndim)
+                # a = np.array([[1, 2], [3, 4]])
+                if(continuous.ndim==1):
+                    continuous= np.array([training_data[:, j]])
+                    continuous=continuous.T
+                else:
+                    b = np.array([training_data[:, j]])
+                    continuous= np.concatenate((continuous, b.T), axis=1)
+                print(continuous)
             print("HELLO")
             print(training_data.shape[1])
             if(j<(training_data.shape[1]-1)):
