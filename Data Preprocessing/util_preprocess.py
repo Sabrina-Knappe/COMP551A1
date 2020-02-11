@@ -92,8 +92,5 @@ def onehot_encode(data):
     return features, numeric_subset, categorical_subset
 
 
-features_train = features; 
-
-
 
   
