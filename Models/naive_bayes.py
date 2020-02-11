@@ -26,18 +26,33 @@ class Naive_Bayes(object):
         binary= np.array([])
         categorical= np.array([])
         continuous= np.array([])
+        binary_model= np.array([])
+        categorical_model= np.array([])
+        continuous_model= np.array([])
         for c in inverse:
             if(categories[c]=="binary"):
-                np.append(binary, training_data[:, j])
+                print(training_data[:, j])
+                np.append(binary, training_data[:, j], axis=1)
             elif(categories[c]=="categorical"):
-                np.append(categorical, training_data[:, j])
+                print(training_data[:, j])
+                np.append(categorical, training_data[:, j], axis=1)
             else:
-                np.append(continuous, training_data[:, j])
-            j=j+1
-        binary_model= self.binary_likelihood(training_data, training_labels)
-        categorical_model= self.categorical(training_data, training_labels)
-        continuous_model= self.continuous(training_data, training_labels)
-        model= np.sum(binary_model,categorical_model,continuous_model)
+                print("continuous")
+                print(training_data[:, j])
+                np.append(continuous, training_data[:, j], axis=1)
+            print(training_data.shape)
+            if(j<(training_data.shape[1]-1)):
+                j=j+1
+        if(binary.shape[0]!=0):
+            print("hit")
+            binary_model= self.binary_likelihood(binary, training_labels)
+        if(categorical.shape[0]!=0):
+            print("hit")
+            categorical_model= self.categorical(categorical, training_labels)
+        if(continuous.shape[0]!=0):
+            print("hit")
+            continuous_model= self.continuous(continuous, training_labels)
+        model= np.sum([binary_model, categorical_model, continuous_model])
         return model
 
 
@@ -79,17 +94,23 @@ class Naive_Bayes(object):
         count_sample = training_data.shape[0]
         separated = [[x for x, t in zip(training_data, training_labels) if t == c] for c in np.unique(training_labels)]
         prior = [np.log(len(i) / count_sample) for i in separated]
+        print("prior ")
+        print(prior)
         count = np.array([np.array(i).sum(axis=0) for i in separated])
         n_doc = np.array([len(i) for i in separated])
         likelihood = count / n_doc[np.newaxis].T
+        print("likelihood ")
+        print(likelihood)
         return prior+likelihood
 
     def categorical(self, training_data, training_labels):
         count_sample = training_data.shape[0]
         separated = [[x for x, t in zip(training_data, training_labels) if t == c] for c in np.unique(training_labels)]
         log_prior = [np.log(len(i) / count_sample) for i in separated]
+        print("log prior "+log_prior)
         count = np.array([np.array(i).sum(axis=0) for i in separated]) + self.alpha
         feature_log_prob = np.log(count / count.sum(axis=1)[np.newaxis].T)
+        print("likelihood "+feature_log_prob)
         return log_prior+feature_log_prob
 
     def continuous(self, training_data, training_labels):
@@ -100,6 +121,8 @@ class Naive_Bayes(object):
             inds=np.nonzero(training_labels[:,c])[0]
             mu[c,:]=np.mean(training_data[inds,:],0)
         log_prior= np.log(np.mean(y,0))[:,None]
-        log_likelihood= - np.sum(.5*(((Xt[None, :, :] - mu[:,None,:]))**2), 2)    
+        print("log prior "+log_prior)
+        log_likelihood= - np.sum(.5*(((Xt[None, :, :] - mu[:,None,:]))**2), 2)  
+        print("likelihood "+log_likelihood)  
         return log_prior+log_likelihood
 
