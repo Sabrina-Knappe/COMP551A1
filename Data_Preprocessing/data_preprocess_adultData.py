@@ -35,7 +35,7 @@ url_old_names  ='https://archive.ics.uci.edu/ml/machine-learning-databases/adult
 
 # Save file locally
 # data folder path 
-dataFolderPath = 'D:\\Documents\\U4 Academics\\Winter 2020\\COMP 551-Applied Machine Learning\\Assignments\\Assignment 1\\COMP551A1\\Dataset Folder\\Dataset2_Adult'
+dataFolderPath = 'D:\\Documents\\U4 Academics\\Winter 2020\\COMP 551-Applied Machine Learning\\Assignments\\Assignment 1\\COMP551A1\\Dataset_Folder\\Dataset2_Adult'
 os.chdir (dataFolderPath)
 # retreving the data
 urlretrieve(url_index, 'adult_index.csv')
@@ -109,7 +109,7 @@ adult_all_new_labels = adult_all_new_processed[:,-1]
 # (allowed to use sklearn forone hot encoding)
 fp = 'D:\\Documents\\U4 Academics\\Winter 2020\\COMP 551-Applied Machine Learning\\Assignments\\Assignment 1\\COMP551A1\\Data Preprocessing'
 os.chdir (fp)
-from util_preprocess import onehot_encode
+# from util_preprocess import onehot_encode
 # process for df_adult_all, it works with dataframes, df_adult_all is unprocessed (with '?'), we remove row2del to all instances afterwards 
 # producings feautres_all
 data=df_adult_all
@@ -149,12 +149,14 @@ features_all_np = features_all.to_numpy()
 # for naive bayes header 
 #type of feature it is ("continuous", "binary", "categorical")
 type_cont = ['continuous']*6 # numerical data 
-type_bi = ['binary']*(len(features_all_np) - 6) # one-hot-encoded categorical data 
+type_bi = ['binary']*(108 - 6) # one-hot-encoded categorical data 
 feature_types = np.concatenate((type_cont, type_bi), axis=None)
+feature_types = np.transpose (feature_types) 
 
-labels_all_np = adult_all_new_labels
+labels_all_np = adult_all_new_labels # total of 42960 labels corresponding to features_all_np
 
-# To feed data into Naive Bayes, we need 
+# now go into kfold_cross_validation.py to split training and testing set then undergo kfold CV
+
 # features_all_np: a numpy array with 6 columns of numeric data, 102 columns of binary one-hot-encoded data, and 42960 instances 
 # feature_types: continuous or binary for 108 columns
 # labels_all_np: labels of all 42960 instances 

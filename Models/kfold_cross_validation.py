@@ -24,6 +24,7 @@ y = labels_all_np
 def split_train_test (x,y): 
 
     xTrain, xTest, yTrain, yTest = train_test_split(x, y, test_size = 0.2, random_state = 0)
+    return xTrain,xTest,yTrain,yTest
 # xTrain = training instances + validation instances = 34368 instances in total, 108 features 
 # yTrain = labels for xTrian 
 # xTest = testing instances = 8592 instances, 108 features 
@@ -68,15 +69,15 @@ def kfold_cross_validation(dataset, folds):
     k-1 will become the training set; 
     1 fold becomes the validatio set 
     '''
-	dataset_split = list()
-	dataset_copy = list(dataset)
-	fold_size = int(len(dataset) / folds)
-	for i in range(folds):
-		fold = list()
-		while len(fold) < fold_size:
-			index = randrange(len(dataset_copy))
-			fold.append(dataset_copy.pop(index))
-		dataset_split.append(fold)
+    dataset_split = list()
+    dataset_copy = list(dataset)
+    fold_size = int(len(dataset) / folds)
+    for i in range(folds):
+	    fold = list()
+	    while len(fold) < fold_size:
+		    index = randrange(len(dataset_copy))
+		    fold.append(dataset_copy.pop(index))
+	    dataset_split.append(fold)
 
     return dataset_split
 
@@ -101,12 +102,19 @@ for i in range (folds):
 
 
 #NAIVE BAYES MODEL IMPLEMENTATION AND TESTING 
+training_data = cv_train_data[0]
+training_labels = cv_train_label[0]
+
+import logisticRegression as rl
+import 
+data_thing= nb.Naive_Bayes("Yujing", feature_types)
+data_thing.fit(training_data, training_labels)
 for split in dataset_split:
     
 
 
-scores_logisticReg = []
-scores_niaveBayes = []
+# scores_logisticReg = []
+# scores_niaveBayes = []
 
 # for train_index, test_index in folds.split(digits.data,digits.target):
 #     X_train, X_test, y_train, y_test = digits.data[train_index], digits.data[test_index], \
