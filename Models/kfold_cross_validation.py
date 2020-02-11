@@ -100,7 +100,7 @@ for i in range (folds):
     
 
 
-#NAIVE BAYES
+#NAIVE BAYES MODEL IMPLEMENTATION AND TESTING 
 for split in dataset_split:
     
 
