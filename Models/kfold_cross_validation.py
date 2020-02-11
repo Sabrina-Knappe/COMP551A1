@@ -106,7 +106,7 @@ for split in dataset_split:
 
 
 scores_logisticReg = []
-scores_niaveBayes = []
+scores_naiveBayes = []
 
 # for train_index, test_index in folds.split(digits.data,digits.target):
 #     X_train, X_test, y_train, y_test = digits.data[train_index], digits.data[test_index], \
