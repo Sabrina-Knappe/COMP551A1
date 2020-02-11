@@ -23,9 +23,9 @@ class Naive_Bayes(object):
         #partition the data according to the types of the
         categories, inverse =np.unique(training_labels, False, True, False)
         j=0
-        binary= np.array()
-        categorical= np.array()
-        continuous= np.array()
+        binary= np.array([])
+        categorical= np.array([])
+        continuous= np.array([])
         for c in inverse:
             if(categories[c]=="binary"):
                 np.append(binary, training_data[:, j])
