@@ -1,16 +1,17 @@
 #Implementing the naive bayes class
+import numpy as np
+
 class Naive_Bayes(object):
-    feature_types=[]
-    prior_type=""
+    feature_types=np.array([])
     name=""
-    
+
+
     #creating the Naive Bayes model for your dataset.
     #name is a string that is the name of the dataset
     #feature_types is an array of strings that is analogous with the positions of the features for your data and tells what
     #type of feature it is ("continuous", "binary", "categorical")
     def __init__(self, name, feature_types):
         self.name = name
-        self.prior_type= prior_type
         self.feature_types= feature_types
 
     
@@ -32,7 +33,7 @@ def fit(self, training_data, training_labels):
             np.append(categorical, training_data[:, j])
         else:
             np.append(continuous, training_data[:, j])
-        j++
+        j=j+1
     binary_model= self.binary_likelihood(training_data, training_labels)
     categorical_model= self.categorical(training_data, training_labels)
     continuous_model= self.continuous(training_data, training_labels)
