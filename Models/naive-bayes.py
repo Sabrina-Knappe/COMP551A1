@@ -75,22 +75,21 @@ def binary_prior(self, training_data, training_labels): #do i need to change thi
 #likelihood
 def binary_likelihood(self, training_data, training_labels):
     #implement bernouilli naive bayes
-    prior= self.multiclass(training_data, training_labels)
-    #likelihood of each word under each class
-    labels, number_of_each= np.unique(training_labels, False, False, True)
-    N= training_labels.size
-    i=0
-    for c in labels
-        
-    likelihood= self
-    logp= np.log(prior)+np.sum(np.log(likelihood*x[:,None]),0)+np.sum(np.log((1-likelihood)*(1-x[:,None])),0)
-    posterior= np.exp(log_p0)
-    posterior /= np.sum(posterior)
-    return posterior
+    count_sample = training_data.shape[0]
+    separated = [[x for x, t in zip(training_data, training_labels) if t == c] for c in np.unique(training_labels)]
+    prior = [np.log(len(i) / count_sample) for i in separated]
+    count = np.array([np.array(i).sum(axis=0) for i in separated])
+    n_doc = np.array([len(i) for i in separated])
+    likelihood = count / n_doc[np.newaxis].T
+    return prior+likelihood
 
 def categorical(self, training_data, training_labels):
-
-    return 0
+    count_sample = training_data.shape[0]
+    separated = [[x for x, t in zip(training_data, training_labels) if t == c] for c in np.unique(training_labels)]
+    log_prior = [np.log(len(i) / count_sample) for i in separated]
+    count = np.array([np.array(i).sum(axis=0) for i in separated]) + self.alpha
+    feature_log_prob = np.log(count / count.sum(axis=1)[np.newaxis].T)
+    return log_prior+feature_log_prob
 
 def continuous(self, training_data, training_labels):
     N, C= training_labels.shape
