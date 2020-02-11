@@ -119,6 +119,11 @@ def train_validation_split(cv_train_data,cv_train_label,fold_num):
         training_data = np.concatenate((cv_train_data[1], cv_train_data[2],cv_train_data[3],cv_train_data[0]))
         training_labels = np.concatenate((cv_train_label[1], cv_train_label[2],cv_train_label[3],cv_train_label[0]))
         
+    validate_data=validate_data.astype(object)
+    validate_labels=validate_labels.astype(object)
+    training_data=training_data.astype(object)
+    training_labels=training_labels.astype(object)
+    
     return validate_data,validate_labels,training_data,training_labels
         
     
