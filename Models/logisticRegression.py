@@ -23,21 +23,27 @@ def fit(self, training_data, training_labels, learning_rate, term):
 
     while np.linalg.norm(temp) > term:
         if self.type == True: 
-            temp = gradient(self,training_data, training_labels, self.params, self.regularization)
+            categories = np.unique(training_labels)
+            char_to_int = dict((c, i) for i, c in enumerate(categories))
+            int_labels = [char_to_int[categories] for categories in training_labels]
+            temp = gradient(self,training_data, int_labels, self.params, self.regularization)
         else:
             onehot_labels = onehot(training_labels)
             temp = gradient(self,training_data, onehot_labels, self.params, self.regularization)
-        self.params -= learning_rate*temp
+
+        self.params = self.params - learning_rate*temp
+
     return self.params
     
 
 def predict(self, params, test_data):
     N,D = test_data.shape
+    z = np.dot(test_data, params)
 
-    if type == True: 
-        y_pred = logistic(np.dot(test_data, params))
+    if self.type == True: 
+        y_pred = logistic(z.astype(float))
     else: 
-        y_pred = softmax(results=np.dot(test_data,params))
+        y_pred = softmax(z.astype(float))
     
     categories = np.argmax(y_pred,axis=0) # check if axis is right
 
@@ -58,10 +64,24 @@ def multi_cost(self, params, design_matrix, labels):
 def onehot(labels): 
     #one hot encoding
     #takes categorical data and puts it into matrices
-    num_labels, num_classes = labels.shape[0], np.max(labels)
-    onehot_labels = np.zeros(num_labels, num_classes)
-    onehot_labels[np.arange(num_labels), labels-1] = 1
-    return onehot_labels
+    categories = np.unique(labels)
+    char_to_int = dict((c, i) for i, c in enumerate(categories))
+    int_labels = [char_to_int[categories] for categories in labels]
+    print(int_labels)
+
+    # then make a matrix
+    #num_labels, num_classes = labels.shape[0], np.max(int_labels)
+    #onehot_labels = np.zeros(num_labels, num_classes)
+    #onehot_labels[np.arange(num_labels), int_labels-1] = 1
+
+    onehot_encoded = list()
+    for value in int_labels:
+	    letter = [0 for _ in range(len(categories))]
+	    letter[value] = 1
+	    onehot_encoded.append(letter)
+    print(onehot_encoded)
+
+    return onehot_encoded
 
 def softmax(results): 
     #performs softmax on an element
@@ -78,7 +98,8 @@ def logsumexp(vec):
 def gradient(self, design_matrix, labels, params, regularization): 
     #Finds gradient for a given set of params
     N,D = design_matrix.shape
-    y_pred = logistic(np.dot(design_matrix, params)) 
+    z = np.dot(design_matrix, params)
+    y_pred = logistic(z.astype(float)) 
     grad = np.dot(design_matrix.T, y_pred - labels)/N
     grad[1:] += regularization * params[1:] #L2 regularization
     # grad[1:] += regularization * np.sign(w[1:]) #L1 regularization
@@ -86,5 +107,5 @@ def gradient(self, design_matrix, labels, params, regularization):
 
 def logistic(logit): 
     #Evaluates logistic function on logit
-    fcn_value = 1/(1 + np.exp(-logit))
+    fcn_value = 1/(1 + np.exp(-1*logit))
     return fcn_value
