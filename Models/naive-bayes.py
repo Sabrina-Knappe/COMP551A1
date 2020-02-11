@@ -40,12 +40,14 @@ def fit(self, training_data, training_labels):
     return model
 
 
-def predict(self, test_data, test_labels):
-    category= 0
-    print("We predict that "+self.name+"has label "+category)
-    for c in class:
-        #multiply array[c_index]*
-    return category
+def predict(self, test_data, test_labels, params):
+    predictions= np.array()
+    for t in test_data:
+        options= np.multiply(params, t)
+        prediction= np.argmax(options)
+        print("We predict that "+t+"has label "+prediction)
+        np.append(predictions, prediction)
+    return predictions
 
 #class prior
 def multiclass(self, training_data, training_labels):
@@ -75,6 +77,11 @@ def binary_likelihood(self, training_data, training_labels):
     #implement bernouilli naive bayes
     prior= self.multiclass(training_data, training_labels)
     #likelihood of each word under each class
+    labels, number_of_each= np.unique(training_labels, False, False, True)
+    N= training_labels.size
+    i=0
+    for c in labels
+        
     likelihood= self
     logp= np.log(prior)+np.sum(np.log(likelihood*x[:,None]),0)+np.sum(np.log((1-likelihood)*(1-x[:,None])),0)
     posterior= np.exp(log_p0)
@@ -82,6 +89,7 @@ def binary_likelihood(self, training_data, training_labels):
     return posterior
 
 def categorical(self, training_data, training_labels):
+
     return 0
 
 def continuous(self, training_data, training_labels):
