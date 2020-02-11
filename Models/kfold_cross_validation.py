@@ -43,6 +43,9 @@ xTrain, xTest, yTrain, yTest = train_test_split(x, y, test_size=0.2, random_stat
 
 x = xTrain
 y = yTrain 
+# convert the label from string ' <=50K' or ' >50K' into binary numbers
+# probably don't need to convert labels into strings 
+
 xy_conc = np.column_stack((x,y)) # cannot use np.concatenate of data with different dimensions 
 dataset = xy_conc; folds = 5 # delete folds later when embedded in function input 
 folds = 5
