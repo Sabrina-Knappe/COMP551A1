@@ -19,8 +19,8 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 ### splitting data into training and testing with a 80:20 ratio (train:test), train includes validation 
 # only use sklearn to split, execute the following 
-# x = features_all_np
-# y = labels_all_np
+x = features_all_np
+y = labels_all_np
 def split_train_test (x,y): 
 
     xTrain, xTest, yTrain, yTest = train_test_split(x, y, test_size = 0.2, random_state = 0)
@@ -45,9 +45,12 @@ fold_size = total_rows / total_folds
 # Split a dataset into k folds
 from random import seed
 from random import randrange
-dataset = x; folds = 5 # delete folds later when embedded in function input 
-
-def kfold_cross_validation(dataset, folds=5):
+x = xTrain
+y = yTrain 
+xy_conc = np.column_stack((x,y)) # cannot use np.concatenate of data with different dimensions 
+dataset = xy_conc; folds = 5 # delete folds later when embedded in function input 
+folds = 5
+def kfold_cross_validation(dataset, folds):
     '''
     Generally, you split data into training-validation-test sets. 
     The goal of cross-validation (CV) is to validate your model multiple times 
@@ -59,18 +62,47 @@ def kfold_cross_validation(dataset, folds=5):
     After CV, you should use training+validation (e.g. all the k-folds) set to retrain 
     your model and test on test set to get the final test accuracy. Notice the 
     test set is only used once.
+    
+    dataset_split: training set split into k fold, including the last column 
+    to be its corresponding label; 
+    k-1 will become the training set; 
+    1 fold becomes the validatio set 
     '''
-    dataset_split=list()
-    dataset_copy = list(dataset)
-    fold_size = int(len(dataset) / folds)
-    for i in range(folds):
-	    fold = list()
-	    while len(fold) < fold_size:
-		    index = randrange(len(dataset_copy))
-		    fold.append(dataset_copy.pop(index))
-		    dataset_split.append(fold)
+	dataset_split = list()
+	dataset_copy = list(dataset)
+	fold_size = int(len(dataset) / folds)
+	for i in range(folds):
+		fold = list()
+		while len(fold) < fold_size:
+			index = randrange(len(dataset_copy))
+			fold.append(dataset_copy.pop(index))
+		dataset_split.append(fold)
+
     return dataset_split
 
+# run this above code inside kfold_cross_validation 
+# delete the last column of each of the five fol, which is the label 
+cv_train_data = []
+cv_train_label = []; label_ind = len(xy_conc[1,:])-1
+for i in range (folds): 
+    # access the last label column of matrix 
+    aa = dataset_split[i]
+    bb = np.array(aa)
+    label = bb [:,label_ind]
+    label_array = np.array(label)
+    cv_train_label.append(label)
+    # delete the last label column of each matrix fold 
+    b = np.delete(dataset_split[i],label_ind,1) # 1 means column 
+    cv_train_data.append(b)
+    
+# cv_train_data has k (5) folds including the 4 folds for training set and 1 fold for testing set 
+# cv_train_label has k (5) folds for the corresponding labels for the 5 folds in cv_train_data
+    
+
+
+#NAIVE BAYES
+for split in dataset_split:
+    
 
 
 scores_logisticReg = []
