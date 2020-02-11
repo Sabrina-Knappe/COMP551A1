@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-k-fold cross validation 
+splitting test and train data, assumed a 80:20 ratio, can change it inside the code! 
+
+k-fold cross validation, here k =5, returns variabel "dataset_split" which is 
+    five chunks of your training data fed into it (i.e. train+validation data)
 """
 
 from random import randrange
