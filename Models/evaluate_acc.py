@@ -11,6 +11,12 @@
     define a function to run k-fold cross validation 
 """
 import numpy as np 
+from __future__ import print_function
+from scipy.integrate import simps
+from numpy import trapz
+import matplotlib.pyplot as plt
+import sympy as sy
+
 
 def evaluate_acc(y,y_hat):
     '''
@@ -82,6 +88,58 @@ def compute_f1_score(y_true, y_pred):
 # to test 
 # print('F1 score for Logistic Regression :', compute_f1_score(df.y_act, df.y_pred_lr))
 # print('F1 score for Niave Bayes:', compute_f1_score(df.y_act, df.y_pred_nb))
+
+def ROC(tp,fn,fp,tn):
+    '''
+    ROC Cruve Value 
+    https://machinelearningmastery.com/roc-curves-and-precision-recall-curves-for-classification-in-python/
+    It is a plot of the false positive rate (x-axis) versus the true positive rate (y-axis) 
+    for a number of different candidate threshold values between 0.0 and 1.0
+    
+    1) The true positive rate is calculated as the number of true positives divided by 
+    the sum of the number of true positives and the number of false negatives. 
+    It describes how good the model is at predicting the positive class when the actual outcome is positive.
+
+    True Positive Rate = True Positives / (True Positives + False Negatives)
+    also called Sensitivity  = True Positives / (True Positives + False Negatives)
+    
+    2)  The false positive rate is calculated as the number of false positives divided by 
+    the sum of the number of false positives and the number of true negatives.
+    It is also called the false alarm rate as it summarizes how often a positive class is predicted when the actual outcome is negative.
+
+    False Positive Rate = False Positives / (False Positives + True Negatives)
+    also called Inverted Specificity 
+    Specificity = True Negatives / (True Negatives + False Positives)
+    False Positive Rate = 1 - Specificity
+    
+    3) reason to use ROC 
+    The curves of different models can be compared directly in general or for different thresholds.
+    The area under the curve (AUC) can be used as a summary of the model skill.
+    
+    4) Hw to interpret ROC and its AUC Values 
+    Smaller values on the x-axis of the plot indicate lower false positives and higher true negatives.
+    Larger values on the y-axis of the plot indicate higher true positives and lower false negatives.
+    
+        best ROC has an AUC of 1; worse ROC has an AUC of 0.5 
+    
+    '''
+    # iterate through an array of threshold points 
+     # True Position Rate 
+    TPR = tp/(tp+fn) # SENSITIVITY, y-aixs
+    FPR = fp/(fp+tn) # 1- SPECIFICITY, x-aixs 
+    
+    return TPR, FPR
+
+def compute_AUC (threshold, TPR, FPR):
+    
+    # compute AUC (Area Under the Curve) value of the ROC curve
+    # TPR,FPR = ROC(tp,fn,fp,tn)
+    auc = trapz(FPR,TPR,dx=0.1)
+    
+    # ONE TRESHOLD VALUE PRODUCES ONE (FPR,TPR) data point and then the ROC curve is 
+    # composed of all points with a different threshold 
+    return auc
+
 
 # Function to calculate mean absolute error
 def mae(y_true, y_pred):
