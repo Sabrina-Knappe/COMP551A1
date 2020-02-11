@@ -32,17 +32,19 @@ class Naive_Bayes(object):
         for c in inverse:
             if(categories[c]=="binary"):
                 print(training_data[:, j])
-                np.append(binary, training_data[:, j], axis=1)
+                np.append(binary, training_data[:, j], axis=0)
             elif(categories[c]=="categorical"):
                 print(training_data[:, j])
-                np.append(categorical, training_data[:, j], axis=1)
+                np.append(categorical, training_data[:, j], axis=0)
             else:
                 print("continuous")
-                print(training_data[:, j])
-                np.append(continuous, training_data[:, j], axis=1)
-            print(training_data.shape)
+                continous=np.append(continuous, [training_data[:, j]], axis=0)
+                print(continous)
+            print("HELLO")
+            print(training_data.shape[1])
             if(j<(training_data.shape[1]-1)):
                 j=j+1
+        
         if(binary.shape[0]!=0):
             print("hit")
             binary_model= self.binary_likelihood(binary, training_labels)
@@ -51,6 +53,7 @@ class Naive_Bayes(object):
             categorical_model= self.categorical(categorical, training_labels)
         if(continuous.shape[0]!=0):
             print("hit")
+            print(continuous)
             continuous_model= self.continuous(continuous, training_labels)
         model= np.sum([binary_model, categorical_model, continuous_model])
         return model
