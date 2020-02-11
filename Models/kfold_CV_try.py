@@ -51,6 +51,8 @@ def kfold_cross_validation(dataset, folds):
     to be its corresponding label; 
     k-1 will become the training set; 
     1 fold becomes the validatio set 
+    
+    cv_train_data: k-fold; 
     '''
     dataset_split = list()
     dataset_copy = list(dataset)
@@ -61,5 +63,65 @@ def kfold_cross_validation(dataset, folds):
 		    index = randrange(len(dataset_copy))
 		    fold.append(dataset_copy.pop(index))
 	    dataset_split.append(fold)
+    
+    # delete the last column of each of the five fol, which is the label, while storing the label
+    cv_train_data = []
+    cv_train_label = []; label_ind = len(dataset[1,:])-1
+    for i in range (folds): 
+        # access the last label column of matrix 
+        aa = dataset_split[i]
+        bb = np.array(aa)
+        label = bb [:,label_ind]
+        label_array = np.array(label)
+        cv_train_label.append(label)
+        # delete the last label column of each matrix fold 
+        b = np.delete(dataset_split[i],label_ind,1) # 1 means column 
+        cv_train_data.append(b)
+        
+    return dataset_split,cv_train_data,cv_train_label
 
-    return dataset_split
+def train_validation_split(cv_train_data,cv_train_label,fold_num):
+    '''
+    input:
+        cv_train_data: k-folded (k=5 here) training data to be split into 
+            k-1 folds for training set
+            1 fold for testing set
+        cv_train_label: cv_train_data corresponding labels 
+        fold_num: the number of time you are evaluating 
+    '''
+    if fold_num == 1:
+        validate_data = cv_train_data[0]
+        validate_labels = cv_train_label[0]
+        training_data = np.concatenate((cv_train_data[1], cv_train_data[2],cv_train_data[3],cv_train_data[4]))
+        training_labels = np.concatenate((cv_train_label[1], cv_train_label[2],cv_train_label[3],cv_train_label[4]))
+
+    if fold_num ==2:
+        validate_data = cv_train_data[1]
+        validate_labels = cv_train_label[1]
+        training_data = np.concatenate((cv_train_data[0], cv_train_data[2],cv_train_data[3],cv_train_data[4]))
+        training_labels = np.concatenate((cv_train_label[0], cv_train_label[2],cv_train_label[3],cv_train_label[4]))
+        
+    if fold_num ==3:
+        validate_data = cv_train_data[2]
+        validate_labels = cv_train_label[2]
+        training_data = np.concatenate((cv_train_data[1], cv_train_data[0],cv_train_data[3],cv_train_data[4]))
+        training_labels = np.concatenate((cv_train_label[1], cv_train_label[0],cv_train_label[3],cv_train_label[4]))
+        
+    if fold_num ==4:
+        validate_data = cv_train_data[3]
+        validate_labels = cv_train_label[3]
+        training_data = np.concatenate((cv_train_data[1], cv_train_data[2],cv_train_data[0],cv_train_data[4]))
+        training_labels = np.concatenate((cv_train_label[1], cv_train_label[2],cv_train_label[0],cv_train_label[4]))
+        
+    if fold_num ==5: 
+        validate_data = cv_train_data[4]
+        validate_labels = cv_train_label[4]
+        training_data = np.concatenate((cv_train_data[1], cv_train_data[2],cv_train_data[3],cv_train_data[0]))
+        training_labels = np.concatenate((cv_train_label[1], cv_train_label[2],cv_train_label[3],cv_train_label[0]))
+        
+    return validate_data,validate_labels,training_data,training_labels
+        
+    
+    
+    
+    
