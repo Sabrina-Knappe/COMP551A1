@@ -64,7 +64,13 @@ training_labels_im = cv_train_label_im[0]
 
 
 ## LOGISTIC REGRESSION MODEL IMPLEMENTATION AND TESTING 
+dataFolderPath = 'D:\\Documents\\U4 Academics\\Winter 2020\\COMP 551-Applied Machine Learning\\Assignments\\Assignment 1\\COMP551A1\\Models'
+os.chdir (dataFolderPath)
 
+import logisticRegression as lr
+  
+immuno_lr = lr.Logistic_Regression(0.02,"immunotherapy","binary")
+params = lr.fit(immuno_lr,training_data_im, training_labels_im, 0.01, 1e-2)
 
 
 
