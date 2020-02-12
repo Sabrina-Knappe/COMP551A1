@@ -30,8 +30,7 @@ Task devision:
       - you might investigate different stopping criteria for the gradient descent in logistic regression, develop an automated approach to select a good subset of features (Grace)
       - some other creative ideas (Sabrina & Yujing)
       
-Link to overleaf with project write-up:
-https://www.overleaf.com/2764746152hpwhvqkrzsqw
+
 
    
    
