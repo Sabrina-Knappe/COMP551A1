@@ -23,7 +23,7 @@ class Naive_Bayes(object):
         #partition the data according to the types of the
         categories, inverse =np.unique(training_labels, False, True, False)
         j=0
-        print(training_labels.shape)
+        # print(training_labels.shape)
         tupe= (1, training_labels.shape[0])
         binary= np.array([])
         categorical= np.array([])
@@ -39,7 +39,7 @@ class Naive_Bayes(object):
                 print(training_data[:, j])
                 np.append(categorical, training_data[:, j], axis=0)
             else:
-                print("continuous")
+                # print("continuous")
                 # print(continuous.ndim)
                 # a = np.array([[1, 2], [3, 4]])
                 if(continuous.ndim==1):
@@ -55,14 +55,14 @@ class Naive_Bayes(object):
                 j=j+1
         
         if(binary.shape[0]!=0):
-            print("hit")
+            # print("hit")
             binary_model= self.binary_likelihood(binary, training_labels)
         if(categorical.shape[0]!=0):
-            print("hit")
+            # print("hit")
             categorical_model= self.categorical(categorical, training_labels)
         if(continuous.shape[0]!=0):
-            print("hit")
-            print(continuous)
+            # print("hit")
+            # print(continuous)
             continuous_model= self.continuous(continuous, training_labels, test_data)
         model= np.sum([binary_model, categorical_model, continuous_model])
         return model
