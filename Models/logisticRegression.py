@@ -42,7 +42,7 @@ def predict(self, params, test_data):
 
     if self.type == True: 
         y_pred = logistic(z.astype(float))
-        categories = y_pred < 0.5
+        categories = y_pred > 0.5
     else: 
         y_pred = softmax(z.astype(float))
         categories = np.argmax(y_pred,axis=0) # check if axis is right
