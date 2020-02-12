@@ -80,8 +80,10 @@ class Naive_Bayes(object):
         print(binary_model.shape)
         print(categorical_model.shape)
         print(continuous.shape)
-
+        
         model= np.sum([binary_model, categorical_model, continuous_model])
+        print("model")
+        print(model)
         print(model.shape)
 
         if self.type == True: 
@@ -94,7 +96,7 @@ class Naive_Bayes(object):
 
 
 
-    def predict(self, test_data, test_labels, params):
+    def predict(self, test_data, params):
         predictions= np.array()
         for t in test_data:
             options= np.multiply(params, t)
@@ -170,10 +172,10 @@ class Naive_Bayes(object):
         #  for each class, subtract mean for (data, feature)
         log_prior= np.log(np.mean(training_labels,0))[:,None]
         print("log prior")
-        print(log_prior.shape)
+        print(log_prior)
         log_likelihood= - np.sum(.5*(((test_data[None, :, :] - mu[:,None,:]))**2), 2)  
         print("likelihood ")  
-        print(log_likelihood.shape)
+        print(log_likelihood)
         log_posterior = log_prior+log_likelihood
         print(log_posterior.shape)
         return log_posterior
