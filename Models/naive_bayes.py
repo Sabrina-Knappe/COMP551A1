@@ -16,13 +16,15 @@ class Naive_Bayes(object):
 
     
 
-    def fit(self, training_data, training_labels):
+    def fit(self, training_data, training_labels, test_data):
         model= 0
         prior= 0
         print("Now fitting " + self.name)
         #partition the data according to the types of the
         categories, inverse =np.unique(training_labels, False, True, False)
         j=0
+        # print(training_labels.shape)
+        tupe= (1, training_labels.shape[0])
         binary= np.array([])
         categorical= np.array([])
         continuous= np.array([])
@@ -37,24 +39,31 @@ class Naive_Bayes(object):
                 print(training_data[:, j])
                 np.append(categorical, training_data[:, j], axis=0)
             else:
-                print("continuous")
-                continous=np.append(continuous, [training_data[:, j]], axis=0)
-                print(continous)
-            print("HELLO")
-            print(training_data.shape[1])
+                # print("continuous")
+                # print(continuous.ndim)
+                # a = np.array([[1, 2], [3, 4]])
+                if(continuous.ndim==1):
+                    continuous= np.array([training_data[:, j]])
+                    continuous=continuous.T
+                else:
+                    b = np.array([training_data[:, j]])
+                    continuous= np.concatenate((continuous, b.T), axis=1)
+                # print(continuous)
+            # print("HELLO")
+            # print(training_data.shape[1])
             if(j<(training_data.shape[1]-1)):
                 j=j+1
         
         if(binary.shape[0]!=0):
-            print("hit")
+            # print("hit")
             binary_model= self.binary_likelihood(binary, training_labels)
         if(categorical.shape[0]!=0):
-            print("hit")
+            # print("hit")
             categorical_model= self.categorical(categorical, training_labels)
         if(continuous.shape[0]!=0):
-            print("hit")
-            print(continuous)
-            continuous_model= self.continuous(continuous, training_labels)
+            # print("hit")
+            # print(continuous)
+            continuous_model= self.continuous(continuous, training_labels, test_data)
         model= np.sum([binary_model, categorical_model, continuous_model])
         return model
 
@@ -116,16 +125,20 @@ class Naive_Bayes(object):
         print("likelihood "+feature_log_prob)
         return log_prior+feature_log_prob
 
-    def continuous(self, training_data, training_labels):
+    def continuous(self, training_data, training_labels, test_data):
+        training_labels=np.array([training_labels])
+        print(training_labels.shape)
         N, C= training_labels.shape
         D= training_data.shape[1]
         mu, s= np.zeros((C,D)), np.zeros((C,D))
         for c in range(C): #calculate mean and standard deviation
             inds=np.nonzero(training_labels[:,c])[0]
             mu[c,:]=np.mean(training_data[inds,:],0)
-        log_prior= np.log(np.mean(y,0))[:,None]
-        print("log prior "+log_prior)
-        log_likelihood= - np.sum(.5*(((Xt[None, :, :] - mu[:,None,:]))**2), 2)  
-        print("likelihood "+log_likelihood)  
+        log_prior= np.log(np.mean(training_labels,0))[:,None]
+        print("log prior")
+        print(log_prior)
+        log_likelihood= - np.sum(.5*(((test_data[None, :, :] - mu[:,None,:]))**2), 2)  
+        print("likelihood ")  
+        print(log_likelihood)
         return log_prior+log_likelihood
 
