@@ -24,6 +24,7 @@ class Naive_Bayes(object):
         categories, inverse =np.unique(training_labels, False, True, False)
         j=0
         # print(training_labels.shape)
+        hot_labels= self.onehot(training_labels)
         tupe= (1, training_labels.shape[0])
         binary= np.array([])
         categorical= np.array([])
@@ -56,14 +57,14 @@ class Naive_Bayes(object):
         
         if(binary.shape[0]!=0):
             # print("hit")
-            binary_model= self.binary_likelihood(binary, training_labels)
+            binary_model= self.binary_likelihood(binary, hot_labels)
         if(categorical.shape[0]!=0):
             # print("hit")
-            categorical_model= self.categorical(categorical, training_labels)
+            categorical_model= self.categorical(categorical, hot_labels)
         if(continuous.shape[0]!=0):
             # print("hit")
             # print(continuous)
-            continuous_model= self.continuous(continuous, training_labels, test_data)
+            continuous_model= self.continuous(continuous, hot_labels, test_data)
         model= np.sum([binary_model, categorical_model, continuous_model])
         return model
 
@@ -126,9 +127,12 @@ class Naive_Bayes(object):
         return log_prior+feature_log_prob
 
     def continuous(self, training_data, training_labels, test_data):
-        training_labels=np.array([training_labels])
-        print(training_labels.shape)
-        N, C= training_labels.shape
+        N= training_labels.shape[0]
+        unique_labels=np.unique(training_labels)
+        print(unique_labels)
+        C= unique_labels.size
+        print("HELP")
+        print(C)
         D= training_data.shape[1]
         mu, s= np.zeros((C,D)), np.zeros((C,D))
         for c in range(C): #calculate mean and standard deviation
@@ -142,3 +146,25 @@ class Naive_Bayes(object):
         print(log_likelihood)
         return log_prior+log_likelihood
 
+    def onehot(self, labels): 
+        #one hot encoding
+        #takes categorical data and puts it into matrices
+        categories = np.unique(labels)
+        char_to_int = dict((c, i) for i, c in enumerate(categories))
+        int_labels = [char_to_int[categories] for categories in labels]
+        print(int_labels)
+
+        # then make a matrix
+        #num_labels, num_classes = labels.shape[0], np.max(int_labels)
+        #onehot_labels = np.zeros(num_labels, num_classes)
+        #onehot_labels[np.arange(num_labels), int_labels-1] = 1
+
+        onehot_encoded = list()
+        for value in int_labels:
+            letter = [0 for _ in range(len(categories))]
+            letter[value] = 1
+            onehot_encoded.append(letter)
+        print(onehot_encoded)
+        onehot_encoded= np.array([onehot_encoded])
+
+        return onehot_encoded
