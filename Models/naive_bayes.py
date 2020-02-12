@@ -127,17 +127,18 @@ class Naive_Bayes(object):
         return log_prior+feature_log_prob
 
     def continuous(self, training_data, training_labels, test_data):
-        N= training_labels.shape[0]
-        unique_labels=np.unique(training_labels)
-        print(unique_labels)
-        C= unique_labels.size
-        print("HELP")
-        print(C)
+        print(training_labels.shape)
+        random, N,C= training_labels.shape
         D= training_data.shape[1]
         mu, s= np.zeros((C,D)), np.zeros((C,D))
         for c in range(C): #calculate mean and standard deviation
-            inds=np.nonzero(training_labels[:,c])[0]
-            mu[c,:]=np.mean(training_data[inds,:],0)
+            # get mean for each class for each feature
+            for f in range(D):
+                inds=np.nonzero(training_labels[:,c])[0]
+                mu[c,:]=np.mean(training_data[inds,:],0)
+        
+        # for each data point, go through features
+        #  for each class, subtract mean for (data, feature)
         log_prior= np.log(np.mean(training_labels,0))[:,None]
         print("log prior")
         print(log_prior)
