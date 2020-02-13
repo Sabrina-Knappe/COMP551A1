@@ -44,7 +44,7 @@ class Logistic_Regression:
             y_pred = logistic(z.astype(float))
             categories = y_pred > 0.5
         else: 
-            y_pred = softmax(z.astype(float))
+            y_pred = self.softmax(z.astype(float))
             categories = np.argmax(y_pred,axis=0) # check if axis is right
 
         return categories
@@ -83,13 +83,13 @@ class Logistic_Regression:
 
         return onehot_encoded
 
-    def softmax(results): 
+    def softmax(self, results): 
         #performs softmax on an element
         y_pred = np.exp(results)
         y_pred /= np.sum(results)
         return y_pred
 
-    def logsumexp(vec): 
+    def logsumexp(self, vec): 
         #gives log of sum of exponents of elements of vec
         vec_max = np.max(vec,0)[None,:]
         result = vec_max + np.log(np.sum(np.exp(vec - vec_max)))
