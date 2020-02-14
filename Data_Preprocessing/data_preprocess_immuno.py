@@ -80,9 +80,10 @@ y_im = yTrain_im
 # probably don't need to convert labels into strings 
 
 xy_conc_im= np.column_stack((x_im,y_im)) # cannot use np.concatenate of data with different dimensions 
-dataset_im = xy_conc_im; folds = 5 # delete folds later when embedded in function input 
+folds = 5 # delete folds later when embedded in function input 
 folds = 5
-dataset_split_im, cv_train_data_im,cv_train_label_im= kfold_cross_validation(dataset_im,folds)
+#dataset_split_im, cv_train_data_im,cv_train_label_im= kfold_cross_validation(dataset_im,folds)
+dataset_split_im, cv_train_data_im,cv_train_label_im= kfold_cross_validation(xy_conc_im,folds)
 
     
 # cv_train_data has k (5) folds including the 4 folds for training set and 1 fold for testing set 
@@ -101,6 +102,8 @@ training_data_im=training_data_im.astype(object)
 training_labels_im=training_data_im.astype(object)
 validate_data_im=validate_data_im.astype(object)
 validate_labels_im=validate_labels_im.astype(object)
+
+##############################################################################
 ## LOGISTIC REGRESSION MODEL IMPLEMENTATION AND TESTING 
 dataFolderPath = 'D:\\Documents\\U4 Academics\\Winter 2020\\COMP 551-Applied Machine Learning\\Assignments\\Assignment 1\\COMP551A1\\Models'
 os.chdir (dataFolderPath)
