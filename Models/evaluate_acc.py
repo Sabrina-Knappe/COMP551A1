@@ -11,24 +11,66 @@
     define a function to run k-fold cross validation 
 """
 import numpy as np 
-from __future__ import print_function
 from scipy.integrate import simps
 from numpy import trapz
 import matplotlib.pyplot as plt
 import sympy as sy
 
+def convert_pred_output(act_output,pred_output,threshold,dtype):
+    '''
+    converting prediction numerical output to integers: binary or multiclass
+    using a threshold for Naive Bayes and Logistic Regression 
+    
+    act_output: actual output (labels)
+    pred_output: model prediction output
+    threshold: value to separate ouput prediction into integers (binary or multiclass)
+    dtype: 'binary' or 'multiclass'
+    '''
+    y_pred=[]; y_act
+#    if dtype = 'binary'
+    if dtype == 'binary': 
+        for i in pred_output:
+            if i < threshold:
+                y_pred.append(0)
+            elif i > threshold:
+                y_pred.append(1)
+        for j in act_output:
+            if j < threshold:
+                y_act.append(0)
+            elif j > threshold:
+                y_act.append(1)
+                
+    if dtype == 'multiclass':
+        # ?
+        
+    return y_act, y_pred
+        
+    
 
-def evaluate_acc(y,y_hat):
+def evaluate_acc(y_act,y_pred):
     '''
     input: 
-        y: true labels  
-        y_hat: target labels 
+        y_act: true labels  
+        y_pred: predicted labels 
         
     output:
-        accuracy score of the models 
+        various types of accuracy scores of the models 
     '''
 # Accuracy, Recall, Precision, F1 Score in Python from scratch
     # https://www.youtube.com/watch?v=9PbrWiLC-4k
+    tp,tn,fp,fn = compute_tp_tn_fn_fp(y_act,y_pred)
+    acc_score=compute_accuracy(tp,tn,fp,fn)
+    precision_score=compute_precision(tp, fp)
+    recall_score=compute_recall(tp, fn)
+    f1_score=compute_f1_score(y_true, y_pred)
+    print('Accuracy Score:',acc_score);
+    print('Precision Score:',precision_score)
+    print('Recall Score:',recall_score)
+    print('f1 Score:',f1_score)
+        
+    return acc_score,precision_score,recall_score,f1_score
+
+    
 
 def compute_tp_tn_fn_fp(y_act, y_pred):
 	'''
@@ -41,10 +83,18 @@ def compute_tp_tn_fn_fp(y_act, y_pred):
     	False negative - actual = 0, predicted = 1
     	True negative - actual = 0, predicted = 0
 	'''
-	tp = sum((y_act == 1) & (y_pred == 1))
-	tn = sum((y_act == 0) & (y_pred == 0))
-	fn = sum((y_act == 1) & (y_pred == 0))
-	fp = sum((y_act == 0) & (y_pred == 1))
+
+    tp=0; tn=0;fn=0; fp=0
+    for i in range(len(y_act)):
+        if y_act[i] == 1 and y_pred[i] == 1:
+            tp+=1
+        elif y_act[i] == 0 and y_pred[i] == 0:
+            tn+=1
+        elif y_act[i] == 0 and y_pred[i] == 1:
+            fn+=1
+        elif y_act[i] == 1 and y_pred[i] == 0:
+            fp+=1
+    
 	return tp, tn, fp, fn
 
 def compute_accuracy(tp, tn, fn, fp):
@@ -145,18 +195,6 @@ def compute_AUC (threshold, TPR, FPR):
 def mae(y_true, y_pred):
     return np.mean(abs(y_true - y_pred))
 
-# Takes in a model, trains the model, and evaluates the model on the test set
-# def fit_and_evaluate(model):
-    
-    # Train the model
-#    model.fit(X_train, y_train)
-    
-    # Make predictions and evalute
-#    model_pred = model.predict(X_test)
-#    model_mae = mae(y_test, model_pred)
-    
-    # Return the performance metric
-#    return model_mae
 
 
 
