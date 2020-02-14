@@ -33,7 +33,7 @@ def split_train_test (x,y,test_size):
 # dataset = xy_conc; folds = 5 # delete folds later when embedded in function input 
 # folds = 5
 
-def kfold_cross_validation(dataset, folds):
+def kfold_cross_validation(xTrain,yTrain, folds):
     '''
     Generally, you split data into training-validation-test sets. 
     The goal of cross-validation (CV) is to validate your model multiple times 
@@ -53,6 +53,13 @@ def kfold_cross_validation(dataset, folds):
     
     cv_train_data: k-fold; 
     '''
+    x = xTrain
+    y = yTrain
+    # convert the label from string ' <=50K' or ' >50K' into binary numbers
+    # probably don't need to convert labels into strings 
+    
+    xy_conc= np.column_stack((x,y)) # cannot use np.concatenate of data with different dimensions 
+    dataset = xy_conc
     dataset_split = list()
     dataset_copy = list(dataset)
     fold_size = int(len(dataset) / folds)
