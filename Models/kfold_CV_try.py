@@ -10,7 +10,6 @@ from random import randrange
 import numpy as np
 from sklearn.model_selection import train_test_split
 from random import seed
-from random import randrange
 
 # x = features_all_np
 # y = labels_all_np
@@ -87,7 +86,7 @@ def train_validation_split(cv_train_data,cv_train_label,fold_num):
             k-1 folds for training set
             1 fold for testing set
         cv_train_label: cv_train_data corresponding labels 
-        fold_num: the number of time you are evaluating 
+        fold_num: the number of time/experiment you are evaluating 
     '''
     if fold_num == 1:
         validate_data = cv_train_data[0]
