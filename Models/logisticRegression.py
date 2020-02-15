@@ -26,7 +26,7 @@ class Logistic_Regression:
                 categories = np.unique(training_labels)
                 char_to_int = dict((c, i) for i, c in enumerate(categories))
                 int_labels = [char_to_int[categories] for categories in training_labels]
-                temp = self.gradient(self,training_data, int_labels, self.params, self.regularization)
+                temp = self.gradient(training_data, int_labels, self.params, self.regularization)
             else:
                 onehot_labels = self.onehot(training_labels)
                 temp = self.gradient(training_data, onehot_labels, self.params, self.regularization)
