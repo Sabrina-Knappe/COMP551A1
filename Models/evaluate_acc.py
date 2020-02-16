@@ -16,35 +16,7 @@ from numpy import trapz
 import matplotlib.pyplot as plt
 import sympy as sy
 
-def convert_pred_output(act_output,pred_output,threshold,dtype):
-    '''
-    converting prediction numerical output to integers: binary or multiclass
-    using a threshold for Naive Bayes and Logistic Regression 
-    
-    act_output: actual output (labels)
-    pred_output: model prediction output
-    threshold: value to separate ouput prediction into integers (binary or multiclass)
-    dtype: 'binary' or 'multiclass'
-    '''
-    y_pred=[]; y_act
-#    if dtype = 'binary'
-    if dtype == 'binary': 
-        for i in pred_output:
-            if i < threshold:
-                y_pred.append(0)
-            elif i > threshold:
-                y_pred.append(1)
-        for j in act_output:
-            if j < threshold:
-                y_act.append(0)
-            elif j > threshold:
-                y_act.append(1)
-                
-    if dtype == 'multiclass':
-        # ?
-        
-    return y_act, y_pred
-        
+      
     
 
 def evaluate_acc(y_act,y_pred):
@@ -73,18 +45,9 @@ def evaluate_acc(y_act,y_pred):
     
 
 def compute_tp_tn_fn_fp(y_act, y_pred):
-	'''
-    input:
-        y_act = actual label 
-        y_pred = predicted label 
-    output: 
-    	True positive - actual = 1, predicted = 1
-    	False positive - actual = 1, predicted = 0
-    	False negative - actual = 0, predicted = 1
-    	True negative - actual = 0, predicted = 0
-	'''
-
-    tp=0; tn=0;fn=0; fp=0
+    
+    
+    tp=0; tn=0; fn=0;fp=0
     for i in range(len(y_act)):
         if y_act[i] == 1 and y_pred[i] == 1:
             tp+=1
@@ -95,7 +58,7 @@ def compute_tp_tn_fn_fp(y_act, y_pred):
         elif y_act[i] == 1 and y_pred[i] == 0:
             fp+=1
     
-	return tp, tn, fp, fn
+    return tp, tn, fp, fn
 
 def compute_accuracy(tp, tn, fn, fp):
 	'''
