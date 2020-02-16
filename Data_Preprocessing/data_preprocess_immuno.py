@@ -11,10 +11,10 @@ import pandas as pd
 # Import numpy
 import numpy as np
 import os 
-from sklearn.model_selection import train_test_split
-from kfold_CV_try import kfold_cross_validation
-from kfold_CV_try import train_validation_split
-import sklearn.preprocessing as preprocessing
+from Models.kfold_CV_try import train_test_split 
+from Models.kfold_CV_try import kfold_cross_validation
+from Models.kfold_CV_try import train_validation_split
+import sklearn.preprocessing as preprocessing          # used for one hot encoding 
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -51,16 +51,8 @@ print(im_labels)
 immuno_design_matrix= np.delete(temp_im, C_im-1, 1)
 print(immuno_design_matrix)
 
-import Models.logisticRegression as lr
-
-imlr = lr.Logistic_Regression(0.02,"Immunotherapy","binary")
-im_params = lr.fit(imlr,immuno_design_matrix, im_labels, 0.01, 1e-2)
-
-print(im_params)
-
-predictions = lr.predict(imlr,im_params,immuno_design_matrix)
-
-##############################
+###############################################################################
+# 5-FOLD CROSS VALIDATION DATA SPLITTING 
 
 immuno_all = df_immuno_all.to_numpy()
 immuno_all = df_immuno_all.values
@@ -73,17 +65,9 @@ immuno_desMat = immuno_all[:,0:7]
 xTrain_im, xTest_im, yTrain_im, yTest_im = train_test_split(immuno_desMat, immuno_labels, test_size=0.2, random_state = 0)
 
 # k-fold cross validation 
-
-x_im = xTrain_im
-y_im = yTrain_im
-# convert the label from string ' <=50K' or ' >50K' into binary numbers
-# probably don't need to convert labels into strings 
-
-xy_conc_im= np.column_stack((x_im,y_im)) # cannot use np.concatenate of data with different dimensions 
-folds = 5 # delete folds later when embedded in function input 
 folds = 5
 #dataset_split_im, cv_train_data_im,cv_train_label_im= kfold_cross_validation(dataset_im,folds)
-dataset_split_im, cv_train_data_im,cv_train_label_im= kfold_cross_validation(xy_conc_im,folds)
+dataset_split_im, cv_train_data_im,cv_train_label_im= kfold_cross_validation(xTrain_im,yTrain_im,folds)
 
     
 # cv_train_data has k (5) folds including the 4 folds for training set and 1 fold for testing set 
@@ -97,24 +81,21 @@ validate_data_im,validate_labels_im,training_data_im,training_labels_im = train_
 #validate_data_im,validate_labels_im,training_data_im,training_labels_im = train_validation_split(cv_train_data_im,cv_train_label_im,4)
 #validate_data_im,validate_labels_im,training_data_im,training_labels_im = train_validation_split(cv_train_data_im,cv_train_label_im,5)
 
-# change data type to object from float64 after k-fold Cross Validation
-training_data_im=training_data_im.astype(object)
-training_labels_im=training_data_im.astype(object)
-validate_data_im=validate_data_im.astype(object)
-validate_labels_im=validate_labels_im.astype(object)
+##############################################################################
+# MODEL IMPLEMENTATION (sklearn)
+##############################################################################
 
 ##############################################################################
 ## LOGISTIC REGRESSION MODEL IMPLEMENTATION AND TESTING 
-dataFolderPath = 'D:\\Documents\\U4 Academics\\Winter 2020\\COMP 551-Applied Machine Learning\\Assignments\\Assignment 1\\COMP551A1\\Models'
-os.chdir (dataFolderPath)
+import Models.logisticRegression as logReg
+immuno_log=logReg.Logistic_Regression(0.02,"Immunotherapy","binary")
+print(immuno_log.name)
+log_immu_results = immuno_log.fit(immuno_design_matrix, im_labels, learning_rate = 0.01, term = 1e-2)
 
-import logisticRegression as lr
-  
-immuno_lr = lr.Logistic_Regression(0.02,"immunotherapy","binary")
-immuno_params = lr.fit(immuno_lr,training_data_im, training_labels_im, 0.01, 1e-2)
-# prediction 
-immuno_pred = lr.predict(immuno_lr,immuno_params,xTest_im)
+imlr = lr.Logistic_Regression(0.02,"Immunotherapy","binary")
+im_params = lr.fit(imlr,immuno_design_matrix, im_labels, 0.01, 1e-2)
+print(im_params)
 
-
-
+predictions_im = lr.predict(imlr,im_params,immuno_design_matrix)
+print(predictions_im)
 
