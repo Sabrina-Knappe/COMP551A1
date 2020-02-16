@@ -158,8 +158,9 @@ def compute_AUC (threshold, TPR, FPR):
 def mae(y_true, y_pred):
     return np.mean(abs(y_true - y_pred))
 
+import random
 
-def train_random_sample(perctage,whole_train_data):
+def train_random_sample(percentage,whole_train_data):
     '''
     percentage: between 0 and 1
     whole_train_data: whole train dataset including the labels, do k-fold CV outside of this function 
