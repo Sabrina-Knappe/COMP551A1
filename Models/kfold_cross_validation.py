@@ -75,14 +75,14 @@ training_labels = cv_train_label[0]
 
 #NAIVE BAYES MODEL IMPLEMENTATION AND TESTING 
 
-import naive_bayes as nb
+import Models.naive_bayes_v2 as nb
 data_thing= nb.Naive_Bayes("Yujing", feature_types)
 
 # LOGISTIC REGRESSION MODEL IMPLEMENTATION AND TESTING 
-import logisticRegression as lr
+import Models.logisticRegression as lr
   
 adult_lr = lr.Logistic_Regression(0.02,"AdultIncome","binary")
-params = lr.fit(adult_lr,training_data, training_labels, 0.01, 1e-2)
+params = adult_lr.fit(adult_lr,training_data, training_labels, 0.01, 1e-2)
 
 # scores_logisticReg = []
 # scores_niaveBayes = []
