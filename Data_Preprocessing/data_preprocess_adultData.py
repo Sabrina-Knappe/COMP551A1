@@ -107,7 +107,7 @@ def preprocess_adult():
     
     # performing one-hot-encoding on categorical data and leave the numerical data be 
     # (allowed to use sklearn forone hot encoding)
-    fp = 'D:\\Documents\\U4 Academics\\Winter 2020\\COMP 551-Applied Machine Learning\\Assignments\\Assignment 1\\COMP551A1\\Data_Preprocessing'
+    fp = '../Dataset_Folder/Dataset2_Adult/adult_data.csv'
     os.chdir (fp)
     # from util_preprocess import onehot_encode
     # process for df_adult_all, it works with dataframes, df_adult_all is unprocessed (with '?'), we remove row2del to all instances afterwards 
