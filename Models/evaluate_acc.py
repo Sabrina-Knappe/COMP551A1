@@ -159,5 +159,20 @@ def mae(y_true, y_pred):
     return np.mean(abs(y_true - y_pred))
 
 
-
+def train_random_sample(perctage,whole_train_data):
+    '''
+    percentage: between 0 and 1
+    whole_train_data: whole train dataset including the labels, do k-fold CV outside of this function 
+    
+    train_random: randomly selected train set with asked percentage of the whole train set, including labels
+    
+    '''
+    # use random.sample to randomly draw indices and use that indices to extract 
+    # the train data and its label with the same index
+    num2draw = int(percentage*len(whole_train_data))
+    whole_ind = np.arange(0,num2draw,1).tolist()
+    draw_ind = random.sample(whole_ind,k=num2draw)
+    train_random = whole_train_data[draw_ind,:]
+    
+    return train_random
 
