@@ -35,21 +35,21 @@ def preprocess_adult():
     
     # Save file locally
     # data folder path 
-    dataFolderPath = 'D:\\Documents\\U4 Academics\\Winter 2020\\COMP 551-Applied Machine Learning\\Assignments\\Assignment 1\\COMP551A1\\Dataset_Folder\\Dataset2_Adult'
-    os.chdir (dataFolderPath)
-    # retreving the data
-    urlretrieve(url_index, 'adult_index.csv')
-    urlretrieve(url_data, 'adult_data.csv')
-    urlretrieve(url_names, 'adult_names.csv')
-    urlretrieve(url_test, 'adult_test.csv')
-    urlretrieve(url_old_names, 'adult_old_names.csv')
+    # dataFolderPath = '../Dataset_Folder/Dataset2_Adult/'
+    # os.chdir (dataFolderPath)
+    # # retreving the data
+    # urlretrieve(url_index, 'adult_index.csv')
+    # urlretrieve(url_data, 'adult_data.csv')
+    # urlretrieve(url_names, 'adult_names.csv')
+    # urlretrieve(url_test, 'adult_test.csv')
+    # urlretrieve(url_old_names, 'adult_old_names.csv')
     
     
     # Read file into a DataFrame and print its head, df = data frame 
     
-    df_index = pd.read_csv('adult_index.csv', sep=',', header=None) # no header, so first row can be read 
-    df_adult_train = pd.read_csv('adult_data.csv', sep=',', header=None) # adult data training set (including the validation set)
-    df_adult_test = pd.read_csv('adult_test.csv', sep=',', header=None)  # adult data testing set # somehow this only has one column...
+    df_index = pd.read_csv('../Dataset_Folder/Dataset2_Adult/adult_index.csv', sep=',', header=None) # no header, so first row can be read 
+    df_adult_train = pd.read_csv('../Dataset_Folder/Dataset2_Adult/adult_data.csv', sep=',', header=None) # adult data training set (including the validation set)
+    df_adult_test = pd.read_csv('../Dataset_Folder/Dataset2_Adult/adult_test.csv', sep=',', header=None)  # adult data testing set # somehow this only has one column...
     # with the first row removed from the original testing dataset'|1x3 Cross validator']
     print(df_adult_train); print(df_adult_test) # see what the data is s
     
