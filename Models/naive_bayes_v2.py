@@ -97,8 +97,10 @@ class Naive_Bayes(object):
 
 
     def predict(self, test_data, params):
-        predictions= np.array()
+        predictions= np.array([])
         for t in test_data:
+            print(t)
+            print(params)
             options= np.multiply(params, t)
             prediction= np.argmax(options)
             print("We predict that "+t+"has label "+prediction)

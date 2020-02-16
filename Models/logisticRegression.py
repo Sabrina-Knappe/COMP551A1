@@ -17,11 +17,13 @@ class Logistic_Regression:
 
     def fit(self, training_data, training_labels, learning_rate, term):
         #Use gradient descent to generate best parameters (full batch)
+        print("Now fitting "+self.name)
         N,D = training_data.shape
         self.params= np.zeros(D)
         temp = np.inf
 
         while np.linalg.norm(temp) > term:
+
             if self.type == True: 
                 categories = np.unique(training_labels)
                 char_to_int = dict((c, i) for i, c in enumerate(categories))
@@ -32,7 +34,7 @@ class Logistic_Regression:
                 temp = self.gradient(training_data, onehot_labels, self.params, self.regularization)
 
             self.params = self.params - learning_rate*temp
-
+            print(np.linalg.norm(temp))
         return self.params
         
 
@@ -41,7 +43,7 @@ class Logistic_Regression:
         z = np.dot(test_data, params)
 
         if self.type == True: 
-            y_pred = logistic(z.astype(float))
+            y_pred = self.logistic(z.astype(float))
             categories = y_pred > 0.5
         else: 
             y_pred = self.softmax(z.astype(float))
@@ -99,13 +101,13 @@ class Logistic_Regression:
         #Finds gradient for a given set of params
         N,D = design_matrix.shape
         z = np.dot(design_matrix, params)
-        print(z.shape)
-        print(params.shape)
-        print(design_matrix)
-        print(design_matrix.shape)
+        # print(z.shape)
+        # print(params.shape)
+        # print(design_matrix)
+        # print(design_matrix.shape)
         y_pred = self.logistic(z.astype(float)) 
-        print(y_pred.shape)
-        print(y_pred)
+        # print(y_pred.shape)
+        # print(y_pred)
         grad = np.dot(design_matrix.T, y_pred - labels)/N
         grad[1:] += regularization * params[1:] #L2 regularization
         # grad[1:] += regularization * np.sign(w[1:]) #L1 regularization
