@@ -17,11 +17,11 @@ import sklearn.linear_model as linear_model
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import OneHotEncoder
 
-data_train = df_adult_train
-data = data_train
+# data_train = df_adult_train
+# data = data_train
 # select below to excute the code equivalent to onehot_encode(data) obtaining features 
 
-df = df_adult_train 
+# df = df_adult_train 
 def basic_stats(df):
     for column in df.columns:
         print (column)
@@ -33,7 +33,7 @@ def basic_stats(df):
        
         # some fancy histograms 
     
-basic_stats(df_adult_train )
+# basic_stats(df_adult_train )
 
 # Encode the categorical features as numbers
 def number_encode_features(df):
@@ -49,27 +49,24 @@ def number_encode_features(df):
 # Calculate the correlation and plot it
 # encoded_data, _ = number_encode_features(df)
     # show heatmap - exploring correlations 
-encoded_data = result 
-sns.heatmap(encoded_data.corr(), square=True)
-plt.show()
-encoded_data.tail(5)
+# encoded_data = result 
+# sns.heatmap(encoded_data.corr(), square=True)
+# plt.show()
+# encoded_data.tail(5)
 # Expore the strong correaltion between "education" and "education-num" revealed by the heatmap (lighter color)
-df[["education", "educational-num"]].head(10)
+# df[["education", "educational-num"]].head(10)
 # "education" and "education-num" are essentially the same data, delete the numerical one
-del df["educational-num"]
+# del df["educational-num"]
 # df.head(1) to see "educational-num" is successfully deleted 
 # also seems like "gender" and "relationship" are anti-correlation (darkest color on heatmap)
 
 
-data_train = df_adult_train
-data = data_train
+# data_train = df_adult_train
+# data = data_train
 # select below to excute the code equivalent to onehot_encode(data) obtaining features 
 
+
 def onehot_encode(data):
-  '''
-      performs one-hot-encoding on categorical data and then concatenate back with 
-      the numerical columns 
-  '''
     # Select the numeric columns in training set data frame:df_adult_train
     numeric_subset = data.select_dtypes('number')
     categorical_subset = data.select_dtypes('object')
