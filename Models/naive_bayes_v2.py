@@ -77,14 +77,14 @@ class Naive_Bayes(object):
             # print(continuous.shape)
             continuous_model= self.continuous(continuous, hot_labels, test_data)
             
-        print(binary_model.shape)
-        print(categorical_model.shape)
-        print(continuous.shape)
+        # print(binary_model.shape)
+        # print(categorical_model.shape)
+        # print(continuous.shape)
         
         model= np.sum([binary_model, categorical_model, continuous_model])
-        print("model")
-        print(model)
-        print(model.shape)
+        # print("model")
+        # print(model)
+        # print(model.shape)
 
         if self.type == True: 
             categories = model > 0.5
@@ -99,8 +99,8 @@ class Naive_Bayes(object):
     def predict(self, test_data, params):
         predictions= np.array([])
         for t in test_data:
-            print(t)
-            print(params)
+            # print(t)
+            # print(params)
             options= np.multiply(params, t)
             prediction= np.argmax(options)
             print("We predict that "+t+"has label "+prediction)
