@@ -47,9 +47,9 @@ def preprocess_adult():
     
     # Read file into a DataFrame and print its head, df = data frame 
     
-    df_index = pd.read_csv('../Dataset_Folder/Dataset2_Adult/adult_index.csv', sep=',', header=None) # no header, so first row can be read 
-    df_adult_train = pd.read_csv('../Dataset_Folder/Dataset2_Adult/adult_data.csv', sep=',', header=None) # adult data training set (including the validation set)
-    df_adult_test = pd.read_csv('../Dataset_Folder/Dataset2_Adult/adult_test.csv', sep=',', header=None)  # adult data testing set # somehow this only has one column...
+    df_index = pd.read_csv('Dataset_Folder/Dataset2_Adult/adult_index.csv', sep=',', header=None) # no header, so first row can be read 
+    df_adult_train = pd.read_csv('Dataset_Folder/Dataset2_Adult/adult_data.csv', sep=',', header=None) # adult data training set (including the validation set)
+    df_adult_test = pd.read_csv('Dataset_Folder/Dataset2_Adult/adult_test.csv', sep=',', header=None)  # adult data testing set # somehow this only has one column...
     # with the first row removed from the original testing dataset'|1x3 Cross validator']
     print(df_adult_train); print(df_adult_test) # see what the data is s
     
@@ -107,7 +107,7 @@ def preprocess_adult():
     
     # performing one-hot-encoding on categorical data and leave the numerical data be 
     # (allowed to use sklearn forone hot encoding)
-    fp = '../Dataset_Folder/Dataset2_Adult/adult_data.csv'
+    fp = 'Dataset_Folder/Dataset2_Adult/adult_data.csv'
     os.chdir (fp)
     # from util_preprocess import onehot_encode
     # process for df_adult_all, it works with dataframes, df_adult_all is unprocessed (with '?'), we remove row2del to all instances afterwards 
