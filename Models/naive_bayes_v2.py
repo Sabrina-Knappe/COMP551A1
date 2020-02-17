@@ -37,9 +37,10 @@ class Naive_Bayes(object):
         binary_model= np.zeros(dim)
         categorical_model= np.zeros(dim)
         continuous_model= np.zeros(dim)
-        print(training_data.shape)
+        # print(training_data.shape)
 
         for c in inverse:
+            print("okk")
             if(categories[c]=="binary"):
                 #print(training_data[:, j])
                 np.append(binary, training_data[j, :], axis=0)
