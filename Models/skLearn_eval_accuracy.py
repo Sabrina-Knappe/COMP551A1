@@ -23,7 +23,7 @@ from pandas import Series, DataFrame
 import scipy
 from scipy.stats import spearmanr
 
-from pylab import rcparams
+# from pylab import rcparams
 import seaborn as sb 
 import matplotlib.pyplot as plt 
 
@@ -43,13 +43,14 @@ from sklearn.metrics import f1_score
 
 from sklearn import metrics 
 
+# %% 
 val_acc_score_Ber=[]; val_acc_score_Multi=[]; val_acc_score_gau=[]
 for i in range(5):
     
     validate_data_im,validate_labels_im,training_data_im,training_labels_im = train_validation_split(cv_train_data_im,cv_train_label_im,(i+1))
 
     # TEST BERNOULLI NAIVE BAYES on trainng and validation sets 
-    del BernNB; del MultiNB; del GausNB
+    # del BernNB; del MultiNB; del GausNB
     BernNB = BernoulliNB(binarize = True)
     BernNB.fit(training_data_im,training_labels_im)
     print(BernNB)
@@ -121,7 +122,7 @@ print('Ber NB precision score:',mu_vali_preci_nb)
 print('Ber NB recall score:',mu_vali_recall_nb)
 print('Ber NB f1 score:',mu_vali_f1_nb)
 
-###############################################################################
+# %%
 # LOGISTIC REGRESSION MODEL 
 # APPEND SCORES
 vali_acc_score_lr=[]; vali_preci_socre_lr=[]; vali_recall_score_lr=[];vali_f1_score_lr=[]
@@ -171,7 +172,7 @@ print('LR precision score:',mu_vali_preci_lr)
 print('LR recall score:',mu_vali_recall_lr)
 print('LR f1 score:',mu_vali_f1_lr)
 
-##############################################################################
+# %%
 # QUESTION 3-PART2: CHANGING LEARNING RATE ON THE LOGISTIC REGRESSION MODEL 
 
 
@@ -181,7 +182,7 @@ print('LR f1 score:',mu_vali_f1_lr)
 
 
 
-###############################################################################
+# %%
 # QUESTION 3 - PART 3: 
 import random
 
